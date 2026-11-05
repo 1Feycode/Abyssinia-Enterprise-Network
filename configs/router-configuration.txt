@@ -1,0 +1,32 @@
+
+==================================================
+ABYSSINIA TECHNOLOGIES PLC
+ROUTER CONFIGURATION RECORD
+==================================================
+
+DEVICE: R1-WAN
+MODEL: Cisco 2911
+
+ROLE:
+Represents the company's WAN edge router.
+
+CURRENT PHASE:
+Physical topology representation only.
+
+No IP addressing, NAT, routing protocol,
+or WAN connection has been configured yet.
+
+FUTURE CONFIGURATION:
+- Interface addressing
+- Static routing
+- OSPF
+- NAT/PAT
+- Access control lists
+- WAN connectivity
+
+VERIFICATION COMMANDS:
+
+show ip interface brief
+show running-config
+show ip route
+==================================================
