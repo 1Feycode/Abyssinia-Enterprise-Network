@@ -12,6 +12,9 @@ The company has four departments:
 - Finance
 
 The company currently has 48 employees and plans to expand to 100 employees.
+## Architecture
+
+![Topology Architecture](packet-tracer/Topology.png)
 
 ### Project Objectives
 1. Design a hierarchical enterprise network.
