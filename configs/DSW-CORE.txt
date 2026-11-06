@@ -41,6 +41,12 @@ interface GigabitEthernet0/2
  no shutdown
 exit
 
+interface GigabitEthernet0/1
+ description ROUTER-LINK-TO-R1-WAN
+ ip address 176.16.0.1 255.255.255.252
+ no shutdown
+exit
+
 interface range FastEthernet0/5-24
  shutdown
 exit
@@ -103,7 +109,6 @@ ip dhcp pool ADMIN_POOL
  dns-server 192.168.10.67
  domain-name abyssinia.local
 
-ip route 0.0.0.0 0.0.0.0 192.168.10.222
-ip route 176.16.0.0 255.255.255.252 192.168.10.222
+ip route 0.0.0.0 0.0.0.0 176.16.0.2
 end
 write memory
