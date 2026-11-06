@@ -32,11 +32,23 @@ WAN edge router representation.
 | Total | 48 | 100 |
 
 ## 6. Project Scope
-This phase focuses on physical topology,
-IPv4 addressing, VLSM, switch configuration,
-connectivity testing, and troubleshooting.
+This implementation phase focuses on the physical topology,
+IPv4 addressing, VLSM, VLAN segmentation, inter-VLAN routing,
+DHCP, DNS, SSH management, static routing, and basic troubleshooting.
 
-## 7. Expected Outcome
-A documented and tested initial enterprise
-network design that can be extended with
-VLANs, routing, and security technologies.
+## 7. Current Implementation Status
+The project currently includes:
+- Department-based VLANs: IT=20, Finance=30, HR=40, Admin=50
+- Native VLAN 99 and management VLAN 100
+- Trunk links between access switches and the DSW-CORE switch
+- Inter-VLAN routing on DSW-CORE
+- DHCP pools for each departmental subnet
+- Static DNS server on the IT VLAN at 192.168.10.67
+- SSH access enabled on all switches
+- Routing between internal subnets and the WAN router
+
+## 8. Expected Outcome
+A working VLAN-based enterprise network foundation that supports
+segmentation, inter-VLAN communication, centralized DHCP, and
+basic secure administrative access. Further enhancements such as
+NAT, ACLs, OSPF, and more advanced WAN security remain for later phases.

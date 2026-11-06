@@ -48,17 +48,18 @@ The company currently has 48 employees and plans to expand to 100 employees.
 - evidence/: Screenshots and implementation evidence
 
 ### Current Project Scope
-This initial implementation covers:
-- Physical network topology
-- IPv4 addressing
-- VLSM calculations
-- Basic switch configuration
-- Connectivity verification
-- Troubleshooting
+This implementation covers:
+- Physical enterprise topology
+- IPv4 addressing and VLSM planning
+- VLAN segmentation using department-based VLANs
+- Inter-VLAN routing on the DSW-CORE switch
+- DHCP services for departmental subnets
+- Static DNS server configuration on the IT VLAN
+- SSH access on all switches
+- Static routing between the internal network and the WAN router
+- Shutdown of unused switch ports
 
-VLAN segmentation, inter-VLAN routing, DHCP,
-OSPF, ACLs, and firewall security are planned
-for subsequent implementation phases.
+NAT, deeper WAN security controls, and OSPF are still planned for future enhancement phases.
 
 ### Project Status
-Phase 1: Network design and IPv4 addressing.
+Phase 2: VLAN-based enterprise network implementation with routing, DHCP, DNS, and SSH administration.

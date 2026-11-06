@@ -18,16 +18,16 @@ Simulation: Cisco Packet Tracer
 
 ## 3. Test Execution
 
-Record actual results after running each test.
+The configuration is prepared and topology-aligned, but the live Packet Tracer test execution has not yet been completed.
 
 | Test ID | Actual Result | Status | Evidence |
 |---|---|---|---|
-| T01 | Pending | Not tested | |
-| T02 | Pending | Not tested | |
-| T03 | Pending | Not tested | |
-| T04 | Pending | Not tested | |
-| T05 | Pending | Not tested | |
-| T06 | Pending | Not tested | |
+| T01 | Pending | Not tested | Configuration ready, execution pending |
+| T02 | Pending | Not tested | Configuration ready, execution pending |
+| T03 | Pending | Not tested | Configuration ready, execution pending |
+| T04 | Pending | Not tested | Configuration ready, execution pending |
+| T05 | Pending | Not tested | Configuration ready, execution pending |
+| T06 | Pending | Not tested | Configuration ready, execution pending |
 
 ## 4. Commands Used
 

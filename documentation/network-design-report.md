@@ -46,17 +46,29 @@ Assigned network: 192.168.10.0/24
 
 ## 6. Network Architecture
 
-The network follows a hierarchical physical design
-with a distribution switch connected to four
-departmental access switches.
+The network follows a hierarchical physical design with a core
+switch connected to four departmental access switches. Each
+access switch connects to the local department PCs and printers,
+while the core switch provides VLAN segmentation and inter-VLAN
+routing.
 
-Include the Packet Tracer topology screenshot here.
+The topology includes a WAN router connected to the external ISP
+network and a DNS server in the IT VLAN connected to the DSW-CORE.
 
 ## 7. IP Addressing Design
 
-Include the complete VLSM calculation and
-IP addressing table here.
+The assigned network is 192.168.10.0/24 and VLSM was used to
+allocate departmental subnets as follows:
 
+- Administration: 192.168.10.0/26
+- IT: 192.168.10.64/27
+- HR: 192.168.10.96/27
+- Finance: 192.168.10.128/27
+- DNS server: 192.168.10.67/27
+- Management VLAN: 192.168.10.192/27
+
+The core switch uses SVI gateways for each VLAN, while the router
+uses 192.168.10.222/27 on the LAN side and 176.16.0.2/30 on the WAN side.
 ## 8. Hardware and Software Requirements
 
 Hardware:
@@ -72,17 +84,27 @@ Software:
 
 ## 9. Implementation
 
-Explain:
-- Device placement
-- Physical connections
-- Switch hostname configuration
-- Workstation IP configuration
+The implementation includes:
+- DSW-CORE as the layer-3 switching and DHCP server
+- ASW-IT, ASW-FINANCE, ASW-HR, and ASW-ADMIN as departmental access switches
+- VLAN assignment by department: IT=20, FINANCE=30, HR=40, ADMIN=50
+- Native VLAN 99 and management VLAN 100
+- Trunks configured between the core and each access switch
+- DHCP pools configured for each department subnet
+- DNS server at 192.168.10.67 in the IT VLAN
+- SSH enabled on each switch with local authentication
 
 ## 10. Testing and Verification
 
-Include actual ping results, switch command
-outputs, and observations.
+Current configuration verification confirms the following:
+- VLANs are created and assigned correctly
+- Access ports are mapped to their department VLANs
+- Trunks allow only the required VLANs
+- Inter-VLAN routing is enabled on DSW-CORE
+- DHCP pools are configured for each department subnet
+- Static routes are configured for internal reachability and WAN access
 
+Actual ping and command-output testing remains to be completed in the lab environment.
 ## 11. Troubleshooting
 
 Document each identified fault, its root cause,

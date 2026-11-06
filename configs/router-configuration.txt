@@ -1,4 +1,3 @@
-
 ==================================================
 ABYSSINIA TECHNOLOGIES PLC
 ROUTER CONFIGURATION RECORD
@@ -10,23 +9,37 @@ MODEL: Cisco 2911
 ROLE:
 Represents the company's WAN edge router.
 
-CURRENT PHASE:
-Physical topology representation only.
 
-No IP addressing, NAT, routing protocol,
-or WAN connection has been configured yet.
+enable
+configure terminal
+hostname R1-WAN
+no ip domain-lookup
+
+interface GigabitEthernet0/0
+ description WAN-LINK
+ ip address 176.16.0.2 255.255.255.252
+ no shutdown
+
+interface GigabitEthernet0/1
+ description LAN-TO-CORE
+ ip address 192.168.10.222 255.255.255.224
+ no shutdown
+
+ip route 192.168.10.0 255.255.255.192 192.168.10.193
+ip route 192.168.10.64 255.255.255.224 192.168.10.193
+ip route 192.168.10.96 255.255.255.224 192.168.10.193
+ip route 192.168.10.128 255.255.255.224 192.168.10.193
+ip route 192.168.10.192 255.255.255.224 192.168.10.193
+ip route 0.0.0.0 0.0.0.0 176.16.0.1
+end
+write memory
 
 FUTURE CONFIGURATION:
-- Interface addressing
-- Static routing
-- OSPF
-- NAT/PAT
+- NAT
 - Access control lists
-- WAN connectivity
+- WAN connectivity hardening
 
 VERIFICATION COMMANDS:
-
 show ip interface brief
 show running-config
 show ip route
-==================================================
