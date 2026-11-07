@@ -1,10 +1,8 @@
 
 # Project Evidence
 ![topology](image.png)
+![ip-configuration-it-pc](image-1.png)
 
-02-device-connections.png
-03-ip-configuration-it.png
-04-ip-configuration-finance.png
 05-successful-ping.png
 06-failed-cross-subnet-ping.png
 07-switch-mac-address-table.png
