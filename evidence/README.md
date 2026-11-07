@@ -6,6 +6,7 @@
 ![ip-configuration-fin-pc](image-3.png)
 ![ip-configuration-admin-pc](image-4.png)
 ![ping gateway and out network pc](image-5.png)
+![ping the outside interface of DSA siwtch](image-6.png)
 05-successful-ping.png
 06-failed-cross-subnet-ping.png
 07-switch-mac-address-table.png
