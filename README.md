@@ -78,7 +78,9 @@ descriptive filename and is indexed in the [evidence guide](evidence/README.md).
    configurations in `configs/`.
 3. Use the [implementation procedure](documentation/implementation-procedure.md)
    to check the topology and device settings.
-4. Run the pending tests in
+4. Follow the [FTP server setup guide](documentation/implementation-procedure.md#5-set-up-the-ftp-server)
+   to configure and test the IT file server.
+5. Run the pending tests in
    [connectivity-tests.md](testing/connectivity-tests.md) and add genuine
    screenshots or command output before marking them verified.
 

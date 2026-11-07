@@ -39,13 +39,51 @@ do not overlap static assignments or DHCP exclusions.
 4. Configure the DNS server at `192.168.10.67/27` and enable DNS. Configure
    the separate web server at `192.168.10.69/27`, enable HTTP, and add an A
    record on the DNS server pointing the chosen hostname to `192.168.10.69`.
-5. Configure the IT-Server at `192.168.10.68/27` with gateway
-   `192.168.10.94`. Enable FTP and verify login, directory listing, and file
-   upload/download using an authorized test account.
+5. Configure the IT-Server and FTP service using the
+   [FTP setup guide](#5-set-up-the-ftp-server).
 6. Configure R1-WAN transit, simulated upstream addressing, static routes, and
    NAT as shown in its reference template.
 
-## 5. Verify and capture evidence
+## 5. Set up the FTP server
+
+1. Connect **IT-Server** to a free access port on **ASW-IT**. Use a port
+   assigned to VLAN 20, and wait for the link indicator to come up.
+2. On IT-Server, open **Desktop → IP Configuration**, select **Static**, and
+   enter:
+
+   | Setting | Value |
+   |---|---|
+   | IPv4 address | `192.168.10.68` |
+   | Subnet mask | `255.255.255.224` |
+   | Default gateway | `192.168.10.94` |
+   | DNS server | `192.168.10.67` |
+
+3. Open **Services → FTP** and set the service to **On**.
+4. Under **User Setup**, enter a username and a unique lab-only password.
+   Select the permissions needed for the test. **Read**, **Write**, and
+   **List** are enough to list and transfer files; leave **Delete** and
+   **Rename** unchecked unless the lab specifically needs them.
+5. Click **Add** and confirm the account appears in the FTP user list with the
+   intended permissions.
+6. From an IT client, open **Desktop → Command Prompt** and connect:
+
+   ```text
+   ping 192.168.10.68
+   ftp 192.168.10.68
+   ```
+
+   Enter the FTP username and password when prompted. At the `ftp>` prompt,
+   run `dir` to verify the login and directory listing. If the Packet Tracer
+   client supports file transfers, test `put <filename>` and `get <filename>`
+   with a non-sensitive test file, then use `dir` to confirm the result.
+7. Record the observed results and capture genuine screenshots for login,
+   listing, and transfers in the [connectivity test report](../testing/connectivity-tests.md).
+
+FTP sends credentials and files without encryption. Use only disposable lab
+credentials and test files; do not use FTP for sensitive real-world data. Do
+not include screenshots that expose passwords in the portfolio.
+
+## 6. Verify and capture evidence
 
 Run the checks in the [connectivity test report](../testing/connectivity-tests.md).
 Capture screenshots from the actual simulation, ensure text and command output
@@ -53,7 +91,7 @@ are legible, and save them in `evidence/` with descriptive names. Update each
 test's actual result and status; do not mark a test verified based only on its
 expected result or a configured command.
 
-## 6. Final review
+## 7. Final review
 
 - Check device names, VLAN membership, trunk status, interface status, DHCP
   leases, and routing tables.
