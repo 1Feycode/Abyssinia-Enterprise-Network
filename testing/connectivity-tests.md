@@ -21,11 +21,13 @@
 | T08 | IT-PC1 to R1-WAN simulated upstream interface (`200.64.100.2`) | Reachable in simulation | Four replies, zero loss | Verified to router interface only | [Ping output](../evidence/10-simulated-wan-connectivity.png) |
 | T09 | IT-PC1 opens server HTTP page at `http://192.168.10.67` | Page loads | Abyssinia Technologies page displayed | Verified by IP; DNS not tested | [Browser output](../evidence/14-intranet-web-page.png) |
 | T10 | Resolve a DNS hostname from a client | Name resolves to server | No lookup result recorded | Not tested | — |
+| T11 | Authorized IT client logs into IT-Server FTP and transfers a test file | Login and transfer succeed | No result recorded; server address not recorded | Not tested | — |
 
 T05's first timeout may occur while ARP resolves the destination. Repeat the
 ping and record the full result before treating cross-VLAN connectivity as
-stable. T08 confirms reachability to the router's own simulated WAN interface;
-it does not prove upstream or Internet access.
+stable. T08 confirms reachability to the router's own simulated WAN interface; it does
+not prove upstream or Internet access. T11 requires the IT-Server address and
+FTP service to be confirmed in the Packet Tracer project before testing.
 
 ## Addressing and switching evidence
 

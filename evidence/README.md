@@ -7,7 +7,7 @@ limitations.
 
 | Screenshot | What it shows |
 |---|---|
-| [02-device-connections.png](02-device-connections.png) | Packet Tracer topology and device connections |
+| [02-device-connections.png](02-device-connections.png) | Packet Tracer topology and device connections, including the IT file/FTP server |
 | [03-ip-configuration-it.png](03-ip-configuration-it.png) | IT-PC1 DHCP address, mask, gateway, and DNS |
 | [04-ip-configuration-hr.png](04-ip-configuration-hr.png) | HR-PC1 DHCP configuration |
 | [05-ip-configuration-finance.png](05-ip-configuration-finance.png) | FIN-PC1 DHCP configuration |

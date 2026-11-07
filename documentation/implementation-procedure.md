@@ -36,10 +36,11 @@ do not overlap static assignments or DHCP exclusions.
    assigning its `176.16.0.1/30` address.
 3. Create DHCP exclusions and department pools. Verify each pool's network,
    gateway, and DNS option.
-4. Configure the DNS/web server at `192.168.10.67/27`. Enable the required
-   DNS and HTTP services and create a DNS record if hostname testing is in
-   scope.
-5. Configure R1-WAN transit, simulated upstream addressing, static routes, and
+4. Configure the DNS/web server at `192.168.10.67/27`. Enable DNS and HTTP
+   services and create a DNS record for hostname testing.
+5. Record the IT-Server's configured address. Enable the FTP service and
+   verify file access using an authorized test account.
+6. Configure R1-WAN transit, simulated upstream addressing, static routes, and
    NAT as shown in its reference template.
 
 ## 5. Verify and capture evidence
@@ -54,8 +55,8 @@ expected result or a configured command.
 
 - Check device names, VLAN membership, trunk status, interface status, DHCP
   leases, and routing tables.
-- Verify client-to-client and cross-VLAN pings, DNS lookup by hostname, and
-  HTTP access.
+- Verify client-to-client and cross-VLAN pings, DNS lookup by hostname, HTTP
+  access, and FTP file transfer.
 - Confirm upstream/NAT behavior only against a reachable simulated destination.
 - Review the `.pkt` file for lab credentials before publishing.
 - Ensure diagrams, configuration templates, address tables, and evidence all

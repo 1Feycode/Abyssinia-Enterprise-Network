@@ -4,7 +4,7 @@
 A Cisco Packet Tracer project documenting a small, expandable headquarters
 network for four departments: Administration, IT, Human Resources, and Finance.
 The design uses department VLANs, Layer 3 switching, DHCP, a simulated WAN edge,
-and a DNS/web server.
+an IT file/FTP server, and a DNS/web server.
 
 > **Project status:** The Packet Tracer simulation and supporting evidence are
 > included. Some connectivity checks are demonstrated in screenshots; the
@@ -34,7 +34,8 @@ flowchart TB
     CORE ---|"802.1Q trunks"| HR["ASW-HR<br/>VLAN 40"]
     CORE ---|"802.1Q trunks"| FIN["ASW-FINANCE<br/>VLAN 30"]
     CORE ---|"802.1Q trunks"| ADMIN["ASW-ADMIN<br/>VLAN 50"]
-    IT --- ITPC["IT clients and IT-Server<br/>server role/address pending"]
+    IT --- ITPC["IT clients"]
+    IT --- FTP["IT-Server<br/>file storage / FTP<br/>address not recorded"]
     HR --- HRPC["HR clients and printer"]
     FIN --- FINPC["Finance clients and printer"]
     ADMIN --- ADMINPC["Administration clients and printer"]
@@ -46,7 +47,9 @@ simulation workspace.
 The multilayer switch provides departmental gateways and connects the access
 switches, the DNS/web server, and the WAN router. Department VLANs are routed
 by the core; the current configuration does not include ACLs to restrict
-inter-department traffic.
+inter-department traffic. The IT-Server is intended for file storage over FTP;
+its configured IP address and FTP functionality still need to be recorded and
+verified.
 
 ## Evidence
 
@@ -86,8 +89,8 @@ file, review and rotate any credentials stored inside the simulation.
   that showed one initial timeout.
 - Verify DNS resolution by hostname; the current browser screenshot uses the
   server IP address and proves HTTP access, not DNS lookup.
-- Confirm the separate `IT-Server` shown in the topology has a documented
-  purpose and address, or remove it from the simulation.
+- Record the IT-Server's configured address and test FTP login and file
+  transfers from an authorized client.
 - Validate upstream routing/NAT beyond the router's own simulated WAN interface.
 - Add and test ACL policy, management-plane restrictions, and redundancy as
   future improvements.

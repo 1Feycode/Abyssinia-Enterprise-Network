@@ -3,6 +3,7 @@ Administration,ADMIN-GATEWAY,192.168.10.1,255.255.255.192,/26,Static,192.168.10.
 Administration,ADMIN-DHCP-POOL,192.168.10.6-192.168.10.62,255.255.255.192,/26,DHCP,192.168.10.1,User devices; .1-.5 excluded
 IT,IT-GATEWAY,192.168.10.94,255.255.255.224,/27,Static,192.168.10.94,DSW-CORE VLAN 20 SVI
 IT,DNS-WEB-SERVER,192.168.10.67,255.255.255.224,/27,Static,192.168.10.94,Static server address; excluded from DHCP
+IT,IT-FTP-SERVER,Not recorded,Not recorded,TBD,Pending,Not recorded,File-storage server shown in topology; record configured address and verify FTP service
 IT,IT-DHCP-POOL,192.168.10.71-192.168.10.93,255.255.255.224,/27,DHCP,192.168.10.94,User devices; .65-.70 excluded
 HR,HR-GATEWAY,192.168.10.126,255.255.255.224,/27,Static,192.168.10.126,DSW-CORE VLAN 40 SVI
 HR,HR-DHCP-POOL,192.168.10.103-192.168.10.125,255.255.255.224,/27,DHCP,192.168.10.126,User devices; .97-.102 excluded

@@ -43,13 +43,13 @@ calculations are in [VLSM calculations](../ip-addressing/vlsm-calculations.md).
 - **ASW-IT, ASW-FINANCE, ASW-HR, ASW-ADMIN:** endpoint access ports and trunks
   to DSW-CORE; management addresses are in VLAN 100.
 - **DNS/web server:** static `192.168.10.67/27`, gateway `192.168.10.94`.
-  The evidence shows its IP configuration and HTTP access by IP address.
+  Provides DNS and hosts the company web page. The evidence shows its IP
+  configuration and HTTP access by IP address.
+- **IT-Server:** intended file-storage server using FTP. Its configured IP
+  address and FTP service/file-transfer behavior still need to be recorded and
+  verified.
 - **R1-WAN:** routed core transit, simulated upstream interface, static routes,
   and NAT overload configuration.
-
-The topology also shows a separate `IT-Server` endpoint. Its role and address
-are not documented in the available configuration table and should be resolved
-before calling the project complete.
 
 ## 4. Security and design boundaries
 
@@ -70,17 +70,18 @@ interface, plus an HTTP page loaded from the server by IP. An inter-VLAN ping
 from IT-PC1 to an HR address received three of four replies after an initial
 timeout. Repeat this test to confirm steady-state behavior.
 
-Same-VLAN client-to-client tests, DNS resolution by hostname, and end-to-end
-upstream access are not evidenced. The detailed results and screenshot links
-are in the [connectivity test report](../testing/connectivity-tests.md).
+Same-VLAN client-to-client tests, DNS resolution by hostname, FTP file transfer,
+and end-to-end upstream access are not evidenced. The detailed results and
+screenshot links are in the [connectivity test report](../testing/connectivity-tests.md).
 
 ## 6. Recommendations
 
 1. Re-run the initial-timeout inter-VLAN test and test client pairs within each
    department.
 2. Enable and verify DNS records, then test name resolution rather than only
-   opening the server by IP.
-3. Assign/document the separate IT-Server or remove it from the topology.
+   opening the web server by IP.
+3. Record the IT-Server's configured address, enable FTP, and test an
+   authorized file upload and download.
 4. Define and test inter-department ACLs and restrict management access.
 5. Validate NAT and routing to a simulated host beyond R1-WAN.
 6. Consider redundant links, switch hardening, and a consistent configuration
