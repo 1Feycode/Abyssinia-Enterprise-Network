@@ -2,6 +2,7 @@
 # Project Evidence
 ![topology](image.png)
 ![ip-configuration-it-pc](image-1.png)
+![ip-configuration-hr-pc](image-2.png)
 
 05-successful-ping.png
 06-failed-cross-subnet-ping.png
