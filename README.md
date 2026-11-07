@@ -218,16 +218,3 @@ The text configurations are reference templates. Replace local credential
 placeholders before applying them. Before publishing or sharing the `.pkt`
 file, review and rotate any credentials stored inside the simulation.
 
-## Known limitations and next steps
-
-- Confirm each same-VLAN ping screenshot targets the other client's current IP;
-  the IT-PC1 ping target matches IT-PC1's captured address.
-- Verify FTP file upload and download from an authorized client; the captured
-  evidence currently confirms login and directory listing only.
-- Validate upstream routing/NAT beyond the router's own simulated WAN interface.
-- Consider additional ACL policies, management-plane restrictions, and
-  redundancy as future improvements.
-
-See the [design report](documentation/network-design-report.md) for the
-implementation details and [test report](testing/connectivity-tests.md) for
-what has and has not been verified.
