@@ -98,7 +98,7 @@ needs verification.
 | Area | Evidence-based status |
 |---|---|
 | DNS and web | FIN-PC1 loads `http://www.abyssinia.com`; the DNS record points to `192.168.10.69` |
-| FTP | Client login and directory listing work; file transfers are not yet shown |
+| FTP | Client login and directory listing work |
 | Department pings | Administration peer pings are evidenced; verify peer IPs before interpreting IT, HR, and Finance screenshots |
 | VLAN 20 ACL | Verified for the tested hosts: Administration-to-IT ping is blocked; IT-to-Administration ping succeeds |
 | WAN/NAT | Router interface checks are captured; reachability beyond the router is unverified |
