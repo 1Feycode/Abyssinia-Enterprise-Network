@@ -44,17 +44,20 @@ address blocks, as detailed in the [address plan](../ip-addressing/).
   static routes, and configured NAT overload.
 - SSH configuration is included in the switch templates.
 
-The current configuration routes between department VLANs and has no ACLs
-blocking that traffic. NAT and the upstream route are configured in the text
-template, but end-to-end upstream access has not been demonstrated by the
-available evidence.
+The core configuration template applies an ACL outbound on VLAN 20. It blocks
+ICMP echo requests from other routed networks to the IT subnet, but allows IT
+to initiate pings to other VLANs and permits other IP traffic. This limited
+policy does not isolate departments or block same-VLAN pings. The ACL behavior
+still needs to be verified in Packet Tracer. NAT and the upstream route are
+configured in the text template, but end-to-end upstream access has not been
+demonstrated by the available evidence.
 
 ## Scope and limitations
 
 This is a Packet Tracer learning project, not a production deployment. DNS
-lookup of the web server by hostname, HTTP access to the separate web server,
-FTP file transfer, same-department client-to-client tests, ACL policy,
-redundancy, and end-to-end WAN access remain to be verified or implemented.
+FTP file transfer, post-ACL ping behavior, redundancy, and end-to-end WAN
+access remain to be verified or implemented. Same-department client pings and
+hostname-based web access have screenshot evidence.
 
 See the [network design report](network-design-report.md), [implementation
 procedure](implementation-procedure.md), and [connectivity test report](../testing/connectivity-tests.md)

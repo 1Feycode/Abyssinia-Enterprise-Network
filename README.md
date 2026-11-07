@@ -42,20 +42,32 @@ flowchart TB
     ADMIN --- ADMINPC["Administration clients and printer"]
 ```
 
+### Topology device models
+
+| Device / role | Packet Tracer model | Quantity |
+|---|---|---:|
+| WAN router (R1-WAN) | Cisco 2911 | 1 |
+| Multilayer core switch (DSW-CORE) | Cisco 3560-24PS | 1 |
+| Department access switches (ASW-IT, ASW-HR, ASW-FINANCE, ASW-ADMIN) | Cisco 2960-24TT | 4 |
+| DNS, web, and FTP servers | Server-PT | 3 |
+| Department client computers | PC-PT | 8 |
+| Department printers | Printer-PT | 3 |
+| Simulated upstream cloud | Cloud-PT | 1 |
+
 The [Packet Tracer topology screenshot](packet-tracer/Topology.png) shows the
-simulation workspace.
+simulation workspace and device model labels.
 
 The DNS server is configured with an A record for `www.abyssinia.com` pointing
 to the web server at `192.168.10.69`. This is a lab DNS entry and does not
 provide public DNS for the `.com` domain. The multilayer switch provides
 departmental gateways and connects the access switches, separate DNS and web
-servers, the FTP server, and the WAN router.
-Department VLANs are routed by the core; the current configuration does not
-include ACLs to restrict inter-department traffic. The web server's IP
-configuration is captured; verify HTTP and DNS name resolution against the
-separate services before marking them complete. The IT-Server provides file
-storage over FTP at `192.168.10.68`; a successful login and directory listing
-are captured, while file upload/download still needs verification.
+servers, the FTP server, and the WAN router. The DSW-CORE configuration
+template includes a simple ACL that blocks other routed networks from pinging
+the IT subnet while allowing IT-initiated pings and all other IP traffic. The
+ACL still needs to be applied to and tested in the Packet Tracer simulation.
+The IT-Server provides file storage over FTP at `192.168.10.68`; a successful
+login and directory listing are captured, while file upload/download still
+needs verification.
 
 ## Evidence
 
@@ -93,17 +105,15 @@ file, review and rotate any credentials stored inside the simulation.
 
 ## Known limitations and next steps
 
-- Verify same-VLAN client-to-client connectivity and repeat the inter-VLAN ping
-  that showed one initial timeout.
-- Verify `www.abyssinia.com` resolves to `192.168.10.69` and open the site by
-  hostname. DNS Service is now On and the record is configured, but a client
-  lookup and browser test are not yet captured. The earlier browser screenshot
-  targets `.67` and predates the separate web server.
+- Apply the VLAN 20 ping ACL in the Packet Tracer file and verify that
+  other-VLAN pings to IT are blocked while IT-initiated pings to other VLANs
+  still work. Same-VLAN client connectivity and DNS-based browser access have
+  screenshot evidence.
 - Verify FTP file upload and download from an authorized client; the captured
   evidence currently confirms login and directory listing only.
 - Validate upstream routing/NAT beyond the router's own simulated WAN interface.
-- Add and test ACL policy, management-plane restrictions, and redundancy as
-  future improvements.
+- Consider additional ACL policies, management-plane restrictions, and
+  redundancy as future improvements.
 
 See the [design report](documentation/network-design-report.md) for the
 implementation details and [test report](testing/connectivity-tests.md) for

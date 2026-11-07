@@ -61,9 +61,15 @@ exit
 ip routing
 service dhcp
 
+ip access-list extended IT-INBOUND-PING-RESTRICTION
+ deny icmp any 192.168.10.64 0.0.0.31 echo
+ permit ip any any
+exit
+
 interface vlan 20
  description IT-VLAN
  ip address 192.168.10.94 255.255.255.224
+ ip access-group IT-INBOUND-PING-RESTRICTION out
  no shutdown
 
 interface vlan 30

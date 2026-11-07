@@ -15,7 +15,7 @@
 | T02 | ADMIN-PC1 / ADMIN-PC2 client-to-client (same VLAN) | Reachable | ADMIN-PC1 pinged `.8` and ADMIN-PC2 pinged `.7`; each received 4/4 replies | Verified | [ADMIN-PC1](../evidence/30-admin-pc1-ping-192-168-10-8.png) / [ADMIN-PC2](../evidence/29-admin-pc2-ping-192-168-10-7.png) |
 | T03 | HR clients client-to-client (same VLAN) | Reachable | HR-PC1 pinged `.103` and HR-PC2 pinged `.105`; each received 4/4 replies | Verified | [HR-PC1](../evidence/24-hr-pc1-ping-192-168-10-103.png) / [HR-PC2](../evidence/23-hr-pc2-ping-192-168-10-105.png) |
 | T04 | FIN-PC1 / FIN-PC2 client-to-client (same VLAN) | Reachable | FIN-PC1 pinged `.137` and FIN-PC2 pinged `.135`; each received 4/4 replies | Verified | [FIN-PC1](../evidence/28-fin-pc1-ping-192-168-10-137.png) / [FIN-PC2](../evidence/27-fin-pc2-ping-192-168-10-135.png) |
-| T05 | IT-PC1 to HR-PC1 (`192.168.10.104`, inter-VLAN) | Reachable; no ACL blocks this path | Three replies out of four; first request timed out | Partial; a repeat to `.104` is not yet evidenced | [Initial ping](../evidence/07-inter-vlan-connectivity.png) |
+| T05 | IT-PC1 to HR-PC1 (`192.168.10.104`, IT-initiated inter-VLAN) | Reachable; IT-initiated ping is permitted by the ACL | Pre-ACL capture shows three replies out of four; no post-ACL result | Pending post-ACL retest | [Pre-ACL ping](../evidence/07-inter-vlan-connectivity.png) |
 | T06 | IT-PC1 to DSW-CORE transit interface (`176.16.0.1`) | Reachable | Four replies, zero loss | Verified | [Ping output](../evidence/08-core-router-link-connectivity.png) |
 | T07 | IT-PC1 to R1-WAN transit interface (`176.16.0.2`) | Reachable | Four replies, zero loss | Verified | [Ping output](../evidence/09-router-lan-connectivity.png) |
 | T08 | IT-PC1 to R1-WAN simulated upstream interface (`200.64.100.2`) | Reachable in simulation | Four replies, zero loss | Verified to router interface only | [Ping output](../evidence/10-simulated-wan-connectivity.png) |
@@ -24,24 +24,25 @@
 | T11 | Authorized IT client logs into IT-Server FTP (`192.168.10.68`) and lists files | Login and listing succeed | Connected, authenticated as `ftp_lab`, and listed the FTP directory | Verified | [FTP login and listing](../evidence/15-ftp-server-login-directory-listing.png) |
 | T12 | Authorized IT client uploads and downloads a test file through FTP | Both transfers succeed | No transfer result shown | Not tested | — |
 | T13 | WEB-SERVER with corrected `/27` mask reaches its gateway and an IT peer | Both destinations reply | Before-fix `/24` and corrected `/27` configurations are captured; no post-fix ping result | Pending | [Before](../evidence/18-web-server-incorrect-subnet-mask.png) / [after](../evidence/17-web-server-ip-configuration.png) configuration |
-| T14 | IT-PC1 to HR client (`192.168.10.103`, inter-VLAN) | Reachable | First request timed out; next three replied (3/4, 25% loss) | Partial; repeat needed | [Ping output](../evidence/31-it-pc1-ping-192-168-10-103.png) |
-| T15 | IT-PC1 to FIN-PC1 (`192.168.10.137`, inter-VLAN) | Reachable | First request timed out; next three replied (3/4, 25% loss) | Partial; repeat needed | [Ping output](../evidence/32-it-pc1-ping-192-168-10-137.png) |
-| T16 | IT-PC1 to ADMIN client (`192.168.10.6`, inter-VLAN) | Reachable | First request timed out; next three replied (3/4, 25% loss) | Partial; repeat needed | [Ping output](../evidence/33-it-pc1-ping-192-168-10-6.png) |
+| T14 | IT-PC1 to HR client (`192.168.10.103`, IT-initiated inter-VLAN) | Reachable; IT-initiated ping is permitted by the ACL | Pre-ACL capture: first request timed out; next three replied | Pending post-ACL retest | [Pre-ACL ping](../evidence/31-it-pc1-ping-192-168-10-103.png) |
+| T15 | IT-PC1 to FIN-PC1 (`192.168.10.137`, IT-initiated inter-VLAN) | Reachable; IT-initiated ping is permitted by the ACL | Pre-ACL capture: first request timed out; next three replied | Pending post-ACL retest | [Pre-ACL ping](../evidence/32-it-pc1-ping-192-168-10-137.png) |
+| T16 | IT-PC1 to ADMIN client (`192.168.10.6`, IT-initiated inter-VLAN) | Reachable; IT-initiated ping is permitted by the ACL | Pre-ACL capture: first request timed out; next three replied | Pending post-ACL retest | [Pre-ACL ping](../evidence/33-it-pc1-ping-192-168-10-6.png) |
+| T17 | HR-PC1 (`192.168.10.103`) to IT-PC1 (`192.168.10.72`) | ICMP echo requests are blocked by the VLAN 20 ACL | Not tested after ACL configuration | Pending in Packet Tracer | — |
+| T18 | IT-PC1 (`192.168.10.72`) to HR-PC1 (`192.168.10.103`) | IT-initiated ping and replies are allowed | Not tested after ACL configuration | Pending in Packet Tracer | — |
 
 The same-VLAN client pings in T01-T04 each show four replies and no packet
-loss. T05 still needs a repeat to the exact HR-PC1 address `.104`; the newly
-captured inter-VLAN pings in T14-T16 each show one timed-out request followed
-by three replies, so repeat those tests as well before treating cross-VLAN
-connectivity as stable. Do not infer the cause of the first-request timeouts
-without confirming it in the simulation. T08 confirms reachability to the
-router's own simulated WAN interface; it does not prove upstream or Internet
-access. T09's direct-IP test from IT-PC1 is still pending. T10 is verified:
-FIN-PC1 initially reported an unresolved hostname while DNS was disabled, then
-successfully loaded the page by hostname after DNS was enabled. This is a
-lab-local DNS mapping, not public DNS for the `.com` domain. The older browser
-screenshot at `.67` predates the separation. T11 confirms FTP login and
-directory listing on `192.168.10.68`; T12 still needs upload and download
-evidence.
+loss. These screenshots and the inter-VLAN captures in T05 and T14-T16 are
+baseline evidence from before the ACL was applied; verify the policy with T17
+and T18 and repeat the IT-initiated pings after applying it. The ACL is in the
+DSW-CORE text template; it has not been applied to the Packet Tracer `.pkt`
+simulation or verified there. T08 confirms reachability to the router's own
+simulated WAN interface; it does not prove upstream or Internet access. T09's
+direct-IP test from IT-PC1 is still pending. T10 is verified: FIN-PC1 initially
+reported an unresolved hostname while DNS was disabled, then successfully
+loaded the page by hostname after DNS was enabled. This is a lab-local DNS
+mapping, not public DNS for the `.com` domain. The older browser screenshot at
+`.67` predates the separation. T11 confirms FTP login and directory listing on
+`192.168.10.68`; T12 still needs upload and download evidence.
 
 ## Addressing and switching evidence
 

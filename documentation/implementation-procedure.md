@@ -51,6 +51,12 @@ do not overlap static assignments or DHCP exclusions.
    [FTP setup guide](#5-set-up-the-ftp-server).
 6. Configure R1-WAN transit, simulated upstream addressing, static routes, and
    NAT as shown in its reference template.
+7. Apply the simple IT ping restriction on DSW-CORE. The
+   [core configuration template](../configs/DSW-CORE.txt) defines the named
+   ACL and applies it outbound on VLAN 20. This blocks other routed networks
+   from pinging IT hosts or the VLAN 20 gateway, while allowing IT-initiated
+   pings and all other IP traffic. It does not block pings between clients
+   within VLAN 20. No NAT changes are needed for this policy.
 
 ## 5. Set up the FTP server
 
@@ -105,6 +111,10 @@ expected result or a configured command.
   leases, and routing tables.
 - On the DNS server, confirm DNS Service is **On** and the
   `www.abyssinia.com` A record points to `192.168.10.69`.
+- Verify that a client in another VLAN cannot ping an IT client, then verify
+  that an IT client can ping a client in another VLAN. Use
+  `show access-lists IT-INBOUND-PING-RESTRICTION` on DSW-CORE to confirm
+  matches on the deny and permit entries.
 - Verify client-to-client and cross-VLAN pings, resolve
   `www.abyssinia.com` from a client, browse to `http://www.abyssinia.com`, and
   test FTP file transfer.
