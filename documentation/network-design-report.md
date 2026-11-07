@@ -63,10 +63,11 @@ to the SVI's own gateway address is handled by the switch rather than
 forwarded out the SVI, this ACL does not block pings to `192.168.10.94`.
 IT clients can initiate pings to other VLANs and receive replies. Same-VLAN
 client traffic is switched locally and is not filtered by this SVI ACL. The
-policy is not full isolation or a general inter-VLAN firewall. The ACL is
-present in the template but has not yet been confirmed in the Packet Tracer
-simulation. Switch templates enable SSH and shut down unused access ports; they
-use credential placeholders that must be replaced locally.
+policy is not full isolation or a general inter-VLAN firewall. Packet Tracer
+screenshots verify the intended behavior for a tested Administration-to-IT
+ping (blocked) and IT-to-Administration ping (allowed). Switch templates
+enable SSH and shut down unused access ports; they use credential placeholders
+that must be replaced locally.
 
 The `.pkt` file may contain credentials from the simulation. Rotate or remove
 those credentials before publishing the file. The simulated upstream network
@@ -76,19 +77,22 @@ does not represent verified Internet connectivity.
 
 Screenshots show successful same-VLAN ping commands, DNS-based browsing from
 FIN-PC1, FTP login and directory listing, and pings to the core transit,
-router transit, and router simulated-WAN interfaces. However, the IT-PC1
-same-VLAN ping target matches its captured own address, so that screenshot
-does not prove client-to-client reachability. Several IT-initiated inter-VLAN
-captures show an initial timeout followed by three replies. The ACL behavior,
-FTP file transfers, direct-IP HTTP access from IT-PC1, and reachability beyond
-the router remain unverified. See the [connectivity test report](../testing/connectivity-tests.md)
-for exact results and evidence.
+router transit, and router simulated-WAN interfaces. The ACL deny/permit
+behavior is evidenced for one cross-department host pair in each direction.
+However, the IT-PC1 same-VLAN ping target matches its captured own address,
+so that screenshot does not prove client-to-client reachability. Several other
+IT-initiated inter-VLAN captures show an initial timeout followed by three
+replies. FTP file transfers, direct-IP HTTP access from IT-PC1, and reachability
+beyond the router remain unverified. See the
+[connectivity test report](../testing/connectivity-tests.md) for exact results
+and evidence.
 
 ## 6. Recommendations
 
-1. Apply the VLAN 20 ping ACL and capture both a denied ping from another VLAN
-   to an IT host and a successful ping initiated by an IT client. Note that
-   this ACL does not block pinging the VLAN 20 gateway.
+1. Extend ACL verification to other departments and non-ICMP services; the
+   current evidence verifies an Administration-to-IT ping is blocked and an
+   IT-to-Administration ping succeeds. Note that this ACL does not block
+   pinging the VLAN 20 gateway.
 2. Capture direct-IP HTTP access to `192.168.10.69`; hostname-based browsing
    from FIN-PC1 is already evidenced.
 3. Test an authorized FTP file upload and download; current evidence confirms

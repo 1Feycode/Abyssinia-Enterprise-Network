@@ -57,7 +57,9 @@ do not overlap static assignments or DHCP exclusions.
    from pinging IT host addresses, while allowing IT-initiated pings and all
    other IP traffic. This SVI ACL does not block pings to the VLAN 20 gateway
    itself, `192.168.10.94`, or pings between clients within VLAN 20. No NAT
-   changes are needed for this policy.
+   changes are needed for this policy. The captured ACL tests show an
+   Administration-to-IT host ping blocked and an IT-to-Administration ping
+   allowed; see tests T17-T18 in the [connectivity report](../testing/connectivity-tests.md).
 
 ## 5. Set up the FTP server
 
@@ -112,8 +114,8 @@ expected result or a configured command.
   leases, and routing tables.
 - On the DNS server, confirm DNS Service is **On** and the
   `www.abyssinia.com` A record points to `192.168.10.69`.
-- Verify that a client in another VLAN cannot ping an IT client, then verify
-  that an IT client can ping a client in another VLAN. Use
+- Repeat the ACL checks: a client in another VLAN should not ping an IT host,
+  while an IT client should be able to ping another VLAN. Use
   `show access-lists IT-INBOUND-PING-RESTRICTION` on DSW-CORE to confirm
   matches on the deny and permit entries.
 - Verify client-to-client and cross-VLAN pings, resolve

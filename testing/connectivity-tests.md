@@ -28,8 +28,8 @@
 | T14 | IT-PC1 to HR endpoint (`192.168.10.103`, IT-initiated inter-VLAN) | Reachable; IT-initiated ping is permitted by the ACL | Pre-ACL capture: first request timed out; next three replied; endpoint identity is unconfirmed | Pending post-ACL retest | [Pre-ACL ping](../evidence/31-it-pc1-ping-192-168-10-103.png) |
 | T15 | IT-PC1 to Finance endpoint (`192.168.10.137`, IT-initiated inter-VLAN) | Reachable; IT-initiated ping is permitted by the ACL | Pre-ACL capture: first request timed out; next three replied; endpoint identity is unconfirmed | Pending post-ACL retest | [Pre-ACL ping](../evidence/32-it-pc1-ping-192-168-10-137.png) |
 | T16 | IT-PC1 to Administration endpoint (`192.168.10.6`, IT-initiated inter-VLAN) | Reachable; IT-initiated ping is permitted by the ACL | Pre-ACL capture: first request timed out; next three replied; endpoint identity is unconfirmed | Pending post-ACL retest | [Pre-ACL ping](../evidence/33-it-pc1-ping-192-168-10-6.png) |
-| T17 | HR-PC1 (`192.168.10.104`) to IT-PC1 (`192.168.10.72`) | ICMP echo requests to IT hosts are blocked by the VLAN 20 ACL | Not tested after ACL configuration | Pending in Packet Tracer | — |
-| T18 | IT-PC1 (`192.168.10.72`) to HR-PC1 (`192.168.10.104`) | IT-initiated ping and replies are allowed | Not tested after ACL configuration | Pending in Packet Tracer | — |
+| T17 | ADMIN-PC1 (`192.168.10.7`) to IT-PC2 (`192.168.10.71`) | ICMP echo requests to IT hosts are blocked by the VLAN 20 ACL | Four requests received “Destination host unreachable” from the Administration gateway `192.168.10.1` | Verified blocked | [Blocked ping](../evidence/34-admin-pc1-ping-it-host-blocked.png) |
+| T18 | IT-PC1 (`192.168.10.72`) to ADMIN-PC1 (`192.168.10.7`) | IT-initiated ping and replies are allowed | Four replies received; 0% loss | Verified allowed | [Successful ping](../evidence/35-it-pc1-ping-admin-host-allowed.png) |
 
 The same-VLAN client pings in T01-T04 each show four replies and no packet
 loss in the captured commands, but T01, T03, and T04 are inconclusive as
@@ -37,11 +37,12 @@ client-to-client tests because the ping destinations are not verified as the
 other endpoint's assigned IP (T01's `.72` matches IT-PC1's documented IP).
 Confirm the target addresses for all endpoint ping tests. The inter-VLAN
 captures in T05 and T14-T16 are baseline evidence from before the ACL was
-applied; verify the policy with T17
-and T18 and repeat the IT-initiated pings after applying it. The ACL is in the
-DSW-CORE text template; it has not been applied to the Packet Tracer `.pkt`
-simulation or verified there. It blocks routed pings to IT hosts, not pings to
-the VLAN 20 gateway itself. T08 confirms reachability to the router's own
+applied. T17 and T18 verify the configured ACL behavior in Packet Tracer for
+the tested Administration and IT hosts: an Administration ping to an IT host
+is blocked, while an IT ping to Administration succeeds. This verifies the
+tested direction and endpoints; it does not prove every address or protocol
+policy. The ACL blocks routed pings to IT hosts, not pings to the VLAN 20
+gateway itself. T08 confirms reachability to the router's own
 simulated WAN interface; it does not prove upstream or Internet access. T09's
 direct-IP test from IT-PC1 is still pending. T10 is verified: FIN-PC1 initially
 reported an unresolved hostname while DNS was disabled, then successfully

@@ -44,14 +44,14 @@ address blocks, as detailed in the [address plan](../ip-addressing/).
   static routes, and configured NAT overload.
 - SSH configuration is included in the switch templates.
 
-The core configuration template applies an ACL outbound on VLAN 20. It blocks
-routed ICMP echo requests to IT host addresses, but does not block pings to
-the VLAN 20 gateway (`192.168.10.94`). IT can initiate pings to other VLANs,
-and other IP traffic is permitted. This limited policy does not isolate
-departments or block same-VLAN pings. The ACL behavior still needs to be
-verified in Packet Tracer. NAT and the upstream route are configured in the
-text template, but end-to-end upstream access has not been demonstrated by the
-available evidence.
+The core configuration applies an ACL outbound on VLAN 20. Screenshots verify
+that an Administration host cannot ping an IT host, while an IT host can ping
+an Administration host. The ACL blocks routed ICMP echo requests to IT host
+addresses, but does not block pings to the VLAN 20 gateway
+(`192.168.10.94`). Other IP traffic is permitted, so this limited policy does
+not isolate departments or block same-VLAN pings. NAT and the upstream route
+are configured in the text template, but end-to-end upstream access has not
+been demonstrated by the available evidence.
 
 ## Scope and limitations
 
@@ -59,8 +59,9 @@ This is a Packet Tracer learning project, not a production deployment.
 Hostname-based web access and FTP login/listing have screenshot evidence.
 Some same-department ping commands have successful replies, but their targets
 are not independently confirmed as the other client's address. FTP file
-transfer, post-ACL ping behavior, fully verified client-to-client tests,
-redundancy, and end-to-end WAN access remain to be verified or implemented.
+transfer, additional ACL endpoint/protocol cases, fully verified
+client-to-client tests, redundancy, and end-to-end WAN access remain to be
+verified or implemented.
 
 See the [network design report](network-design-report.md), [implementation
 procedure](implementation-procedure.md), and [connectivity test report](../testing/connectivity-tests.md)

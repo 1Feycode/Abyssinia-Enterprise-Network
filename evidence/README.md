@@ -40,6 +40,8 @@ limitations.
 | [31-it-pc1-ping-192-168-10-103.png](31-it-pc1-ping-192-168-10-103.png) | IT-PC1 inter-VLAN ping to HR address `.103`; first request timed out, next three replied |
 | [32-it-pc1-ping-192-168-10-137.png](32-it-pc1-ping-192-168-10-137.png) | IT-PC1 inter-VLAN ping to FIN-PC1 `.137`; first request timed out, next three replied |
 | [33-it-pc1-ping-192-168-10-6.png](33-it-pc1-ping-192-168-10-6.png) | IT-PC1 inter-VLAN ping to Administration address `.6`; first request timed out, next three replied |
+| [34-admin-pc1-ping-it-host-blocked.png](34-admin-pc1-ping-it-host-blocked.png) | ADMIN-PC1 ping to IT address `.71` is blocked; four “Destination host unreachable” responses from gateway `.1` |
+| [35-it-pc1-ping-admin-host-allowed.png](35-it-pc1-ping-admin-host-allowed.png) | IT-PC1 ping to ADMIN-PC1 `.7` succeeds with four replies and no packet loss |
 
 Do not add fabricated or sample screenshots. Capture any remaining tests from
 the actual simulation, save them with descriptive filenames, and update the
