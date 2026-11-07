@@ -4,7 +4,7 @@
 A Cisco Packet Tracer project documenting a small, expandable headquarters
 network for four departments: Administration, IT, Human Resources, and Finance.
 The design uses department VLANs, Layer 3 switching, DHCP, a simulated WAN edge,
-an IT file/FTP server, and a DNS/web server.
+an IT file/FTP server, and separate DNS and web servers.
 
 > **Project status:** The Packet Tracer simulation and supporting evidence are
 > included. Some connectivity checks are demonstrated in screenshots; the
@@ -29,7 +29,8 @@ an IT file/FTP server, and a DNS/web server.
 flowchart TB
     UP["Simulated upstream<br/>200.64.100.0/24"] --- R1["R1-WAN<br/>Gi0/1: 200.64.100.2"]
     R1 ---|"Transit 176.16.0.0/30"| CORE["DSW-CORE<br/>SVI gateways, DHCP, inter-VLAN routing"]
-    CORE ---|"VLAN 20"| DNS["DNS/web server<br/>192.168.10.67"]
+    CORE ---|"VLAN 20"| DNS["DNS server<br/>192.168.10.67"]
+    CORE ---|"VLAN 20"| WEB["Web server<br/>192.168.10.69"]
     CORE ---|"802.1Q trunks"| IT["ASW-IT<br/>VLAN 20"]
     CORE ---|"802.1Q trunks"| HR["ASW-HR<br/>VLAN 40"]
     CORE ---|"802.1Q trunks"| FIN["ASW-FINANCE<br/>VLAN 30"]
@@ -45,11 +46,13 @@ The [Packet Tracer topology screenshot](packet-tracer/Topology.png) shows the
 simulation workspace.
 
 The multilayer switch provides departmental gateways and connects the access
-switches, the DNS/web server, and the WAN router. Department VLANs are routed
-by the core; the current configuration does not include ACLs to restrict
-inter-department traffic. The IT-Server provides file storage over FTP at
-`192.168.10.68`; a successful login and directory listing are captured, while
-file upload/download still needs verification.
+switches, separate DNS and web servers, the FTP server, and the WAN router.
+Department VLANs are routed by the core; the current configuration does not
+include ACLs to restrict inter-department traffic. The web server's IP
+configuration is captured; verify HTTP and DNS name resolution against the
+separate services before marking them complete. The IT-Server provides file
+storage over FTP at `192.168.10.68`; a successful login and directory listing
+are captured, while file upload/download still needs verification.
 
 ## Evidence
 
@@ -87,8 +90,9 @@ file, review and rotate any credentials stored inside the simulation.
 
 - Verify same-VLAN client-to-client connectivity and repeat the inter-VLAN ping
   that showed one initial timeout.
-- Verify DNS resolution by hostname; the current browser screenshot uses the
-  server IP address and proves HTTP access, not DNS lookup.
+- Verify that the DNS server resolves the web server's hostname to
+  `192.168.10.69`, then open the site by hostname. The earlier browser screenshot
+  targets `.67` and predates the separate web server.
 - Verify FTP file upload and download from an authorized client; the captured
   evidence currently confirms login and directory listing only.
 - Validate upstream routing/NAT beyond the router's own simulated WAN interface.

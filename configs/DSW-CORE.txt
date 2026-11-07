@@ -40,6 +40,13 @@ interface GigabitEthernet0/2
  no shutdown
 exit
 
+interface FastEthernet0/5
+ description WEB-SERVER-CONNECTED-TO-DSW
+ switchport mode access
+ switchport access vlan 20
+ no shutdown
+exit
+
 interface GigabitEthernet0/1
  description ROUTER-LINK-TO-R1-WAN
  no switchport
@@ -47,7 +54,7 @@ interface GigabitEthernet0/1
  no shutdown
 exit
 
-interface range FastEthernet0/5-24
+interface range FastEthernet0/6-24
  shutdown
 exit
 

@@ -15,8 +15,8 @@ pending rather than assumed successful.
 The design separates Administration, IT, HR, and Finance at Layer 2 and uses
 DSW-CORE for inter-VLAN routing and departmental default gateways. Four access
 switches connect departmental endpoints to the core using 802.1Q trunks. The
-core connects the DNS/web server and R1-WAN; R1-WAN connects to a simulated
-upstream cloud.
+core connects separate DNS, web, and FTP servers and R1-WAN; R1-WAN connects
+to a simulated upstream cloud.
 
 ### VLANs and subnets
 
@@ -42,9 +42,12 @@ calculations are in [VLSM calculations](../ip-addressing/vlsm-calculations.md).
   toward R1-WAN.
 - **ASW-IT, ASW-FINANCE, ASW-HR, ASW-ADMIN:** endpoint access ports and trunks
   to DSW-CORE; management addresses are in VLAN 100.
-- **DNS/web server:** static `192.168.10.67/27`, gateway `192.168.10.94`.
-  Provides DNS and hosts the company web page. The evidence shows its IP
-  configuration and HTTP access by IP address.
+- **DNS server:** static `192.168.10.67/27`, gateway `192.168.10.94`. It
+  provides DNS; hostname resolution for the web server still needs testing.
+- **Web server:** static `192.168.10.69/27`, gateway `192.168.10.94`. Its IP
+  configuration is captured. HTTP service and hostname-based browsing still
+  need verification. The earlier browser screenshot targets `.67`, before the
+  web server was separated.
 - **IT-Server:** file-storage server at `192.168.10.68/27` using FTP. Evidence
   shows a successful client login and directory listing; file upload/download
   still needs to be verified.
@@ -70,16 +73,17 @@ interface, plus an HTTP page loaded from the server by IP. An inter-VLAN ping
 from IT-PC1 to an HR address received three of four replies after an initial
 timeout. Repeat this test to confirm steady-state behavior.
 
-Same-VLAN client-to-client tests, DNS resolution by hostname, FTP file
-upload/download, and end-to-end upstream access are not evidenced. The detailed
-results and screenshot links are in the [connectivity test report](../testing/connectivity-tests.md).
+Same-VLAN client-to-client tests, DNS resolution of the web server hostname,
+HTTP access to the separate web server, FTP file upload/download, and end-to-end
+upstream access are not evidenced. The detailed results and screenshot links
+are in the [connectivity test report](../testing/connectivity-tests.md).
 
 ## 6. Recommendations
 
 1. Re-run the initial-timeout inter-VLAN test and test client pairs within each
    department.
-2. Enable and verify DNS records, then test name resolution rather than only
-   opening the web server by IP.
+2. Add/verify a DNS A record for the web server at `192.168.10.69`, then test
+   both HTTP access by IP and browsing by hostname.
 3. Test an authorized FTP file upload and download; current evidence confirms
    login and directory listing only.
 4. Define and test inter-department ACLs and restrict management access.

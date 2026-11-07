@@ -6,9 +6,9 @@ private values before applying any template.
 
 ## 1. Confirm the topology
 
-Check that DSW-CORE connects to all four departmental access switches, the
-DNS/web server, and R1-WAN. Confirm endpoint links and labels. The diagram also
-contains a separate IT-Server; document its role and address or remove it.
+Check that DSW-CORE connects to all four departmental access switches, the DNS
+server (`192.168.10.67`), web server (`192.168.10.69`), FTP server
+(`192.168.10.68`), and R1-WAN. Confirm endpoint links and labels.
 
 ## 2. Apply the address plan
 
@@ -36,8 +36,9 @@ do not overlap static assignments or DHCP exclusions.
    assigning its `176.16.0.1/30` address.
 3. Create DHCP exclusions and department pools. Verify each pool's network,
    gateway, and DNS option.
-4. Configure the DNS/web server at `192.168.10.67/27`. Enable DNS and HTTP
-   services and create a DNS record for hostname testing.
+4. Configure the DNS server at `192.168.10.67/27` and enable DNS. Configure
+   the separate web server at `192.168.10.69/27`, enable HTTP, and add an A
+   record on the DNS server pointing the chosen hostname to `192.168.10.69`.
 5. Configure the IT-Server at `192.168.10.68/27` with gateway
    `192.168.10.94`. Enable FTP and verify login, directory listing, and file
    upload/download using an authorized test account.
@@ -56,8 +57,8 @@ expected result or a configured command.
 
 - Check device names, VLAN membership, trunk status, interface status, DHCP
   leases, and routing tables.
-- Verify client-to-client and cross-VLAN pings, DNS lookup by hostname, HTTP
-  access, and FTP file transfer.
+- Verify client-to-client and cross-VLAN pings, DNS lookup of the web-server
+  hostname, HTTP access to `192.168.10.69`, and FTP file transfer.
 - Confirm upstream/NAT behavior only against a reachable simulated destination.
 - Review the `.pkt` file for lab credentials before publishing.
 - Ensure diagrams, configuration templates, address tables, and evidence all

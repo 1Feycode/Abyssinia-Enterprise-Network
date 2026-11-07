@@ -35,8 +35,8 @@ address blocks, as detailed in the [address plan](../ip-addressing/).
 - DSW-CORE is the Layer 3 distribution switch, departmental default gateway,
   and DHCP server.
 - Four access switches connect departmental endpoints over 802.1Q trunks.
-- The core also connects a DNS/web server with static address
-  `192.168.10.67/27`; it provides DNS and hosts the company web page.
+- The core connects a DNS server at `192.168.10.67/27` and a separate web
+  server at `192.168.10.69/27`.
 - A separate IT-Server at `192.168.10.68/27` is intended for departmental file
   storage using FTP. A client login and directory listing are evidenced;
   file transfer remains to be verified.
@@ -52,9 +52,9 @@ available evidence.
 ## Scope and limitations
 
 This is a Packet Tracer learning project, not a production deployment. DNS
-lookup by hostname, FTP file transfer, same-department client-to-client tests,
-ACL policy, redundancy, and end-to-end WAN access remain to be verified or
-implemented.
+lookup of the web server by hostname, HTTP access to the separate web server,
+FTP file transfer, same-department client-to-client tests, ACL policy,
+redundancy, and end-to-end WAN access remain to be verified or implemented.
 
 See the [network design report](network-design-report.md), [implementation
 procedure](implementation-procedure.md), and [connectivity test report](../testing/connectivity-tests.md)

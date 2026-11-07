@@ -19,17 +19,18 @@
 | T06 | IT-PC1 to DSW-CORE transit interface (`176.16.0.1`) | Reachable | Four replies, zero loss | Verified | [Ping output](../evidence/08-core-router-link-connectivity.png) |
 | T07 | IT-PC1 to R1-WAN transit interface (`176.16.0.2`) | Reachable | Four replies, zero loss | Verified | [Ping output](../evidence/09-router-lan-connectivity.png) |
 | T08 | IT-PC1 to R1-WAN simulated upstream interface (`200.64.100.2`) | Reachable in simulation | Four replies, zero loss | Verified to router interface only | [Ping output](../evidence/10-simulated-wan-connectivity.png) |
-| T09 | IT-PC1 opens server HTTP page at `http://192.168.10.67` | Page loads | Abyssinia Technologies page displayed | Verified by IP; DNS not tested | [Browser output](../evidence/14-intranet-web-page.png) |
-| T10 | Resolve a DNS hostname from a client | Name resolves to server | No lookup result recorded | Not tested | — |
+| T09 | IT-PC1 opens web server at `http://192.168.10.69` | Page loads | No result recorded after web server separation | Not tested | — |
+| T10 | Resolve the web server hostname from a client | Name resolves to `192.168.10.69` | No lookup result recorded | Not tested | — |
 | T11 | Authorized IT client logs into IT-Server FTP (`192.168.10.68`) and lists files | Login and listing succeed | Connected, authenticated as `ftp_lab`, and listed the FTP directory | Verified | [FTP login and listing](../evidence/15-ftp-server-login-directory-listing.png) |
 | T12 | Authorized IT client uploads and downloads a test file through FTP | Both transfers succeed | No transfer result shown | Not tested | — |
 
 T05's first timeout may occur while ARP resolves the destination. Repeat the
 ping and record the full result before treating cross-VLAN connectivity as
 stable. T08 confirms reachability to the router's own simulated WAN interface;
-it does not prove upstream or Internet access. T11 confirms FTP login and
-directory listing on `192.168.10.68`; T12 still needs upload and download
-evidence.
+it does not prove upstream or Internet access. T09 and T10 need to be rerun against the separate web server and DNS service.
+The older browser screenshot at `.67` predates the separation. T11 confirms FTP
+login and directory listing on `192.168.10.68`; T12 still needs upload and
+download evidence.
 
 ## Addressing and switching evidence
 
@@ -41,8 +42,9 @@ interface status:
 - [HR-PC1 IP configuration](../evidence/04-ip-configuration-hr.png)
 - [FIN-PC1 IP configuration](../evidence/05-ip-configuration-finance.png)
 - [ADMIN-PC1 IP configuration](../evidence/06-ip-configuration-admin.png)
-- [DNS/web server IP configuration](../evidence/13-dns-server-ip-configuration.png)
+- [DNS server IP configuration](../evidence/13-dns-server-ip-configuration.png)
 - [IT-Server FTP IP configuration](../evidence/16-ftp-server-ip-configuration.png)
+- [Web server IP configuration](../evidence/17-web-server-ip-configuration.png)
 - [ASW-IT MAC address table](../evidence/11-switch-mac-address-table.png)
 - [ASW-IT interface status](../evidence/12-switch-interface-status.png)
 
