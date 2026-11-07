@@ -35,7 +35,7 @@ flowchart TB
     CORE ---|"802.1Q trunks"| FIN["ASW-FINANCE<br/>VLAN 30"]
     CORE ---|"802.1Q trunks"| ADMIN["ASW-ADMIN<br/>VLAN 50"]
     IT --- ITPC["IT clients"]
-    IT --- FTP["IT-Server<br/>file storage / FTP<br/>address not recorded"]
+    IT --- FTP["IT-Server<br/>file storage / FTP<br/>192.168.10.68"]
     HR --- HRPC["HR clients and printer"]
     FIN --- FINPC["Finance clients and printer"]
     ADMIN --- ADMINPC["Administration clients and printer"]
@@ -47,9 +47,9 @@ simulation workspace.
 The multilayer switch provides departmental gateways and connects the access
 switches, the DNS/web server, and the WAN router. Department VLANs are routed
 by the core; the current configuration does not include ACLs to restrict
-inter-department traffic. The IT-Server is intended for file storage over FTP;
-its configured IP address and FTP functionality still need to be recorded and
-verified.
+inter-department traffic. The IT-Server provides file storage over FTP at
+`192.168.10.68`; a successful login and directory listing are captured, while
+file upload/download still needs verification.
 
 ## Evidence
 
@@ -89,8 +89,8 @@ file, review and rotate any credentials stored inside the simulation.
   that showed one initial timeout.
 - Verify DNS resolution by hostname; the current browser screenshot uses the
   server IP address and proves HTTP access, not DNS lookup.
-- Record the IT-Server's configured address and test FTP login and file
-  transfers from an authorized client.
+- Verify FTP file upload and download from an authorized client; the captured
+  evidence currently confirms login and directory listing only.
 - Validate upstream routing/NAT beyond the router's own simulated WAN interface.
 - Add and test ACL policy, management-plane restrictions, and redundancy as
   future improvements.

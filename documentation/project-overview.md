@@ -37,9 +37,9 @@ address blocks, as detailed in the [address plan](../ip-addressing/).
 - Four access switches connect departmental endpoints over 802.1Q trunks.
 - The core also connects a DNS/web server with static address
   `192.168.10.67/27`; it provides DNS and hosts the company web page.
-- A separate IT-Server is intended for departmental file storage using FTP.
-  Its configured IP address and FTP operation still need to be recorded and
-  tested.
+- A separate IT-Server at `192.168.10.68/27` is intended for departmental file
+  storage using FTP. A client login and directory listing are evidenced;
+  file transfer remains to be verified.
 - R1-WAN provides a routed transit to the core, a simulated upstream interface,
   static routes, and configured NAT overload.
 - SSH configuration is included in the switch templates.
@@ -54,8 +54,7 @@ available evidence.
 This is a Packet Tracer learning project, not a production deployment. DNS
 lookup by hostname, FTP file transfer, same-department client-to-client tests,
 ACL policy, redundancy, and end-to-end WAN access remain to be verified or
-implemented. Add the FTP server address to the address table after checking its
-Packet Tracer configuration.
+implemented.
 
 See the [network design report](network-design-report.md), [implementation
 procedure](implementation-procedure.md), and [connectivity test report](../testing/connectivity-tests.md)

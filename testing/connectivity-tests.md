@@ -21,13 +21,15 @@
 | T08 | IT-PC1 to R1-WAN simulated upstream interface (`200.64.100.2`) | Reachable in simulation | Four replies, zero loss | Verified to router interface only | [Ping output](../evidence/10-simulated-wan-connectivity.png) |
 | T09 | IT-PC1 opens server HTTP page at `http://192.168.10.67` | Page loads | Abyssinia Technologies page displayed | Verified by IP; DNS not tested | [Browser output](../evidence/14-intranet-web-page.png) |
 | T10 | Resolve a DNS hostname from a client | Name resolves to server | No lookup result recorded | Not tested | — |
-| T11 | Authorized IT client logs into IT-Server FTP and transfers a test file | Login and transfer succeed | No result recorded; server address not recorded | Not tested | — |
+| T11 | Authorized IT client logs into IT-Server FTP (`192.168.10.68`) and lists files | Login and listing succeed | Connected, authenticated as `ftp_lab`, and listed the FTP directory | Verified | [FTP login and listing](../evidence/15-ftp-server-login-directory-listing.png) |
+| T12 | Authorized IT client uploads and downloads a test file through FTP | Both transfers succeed | No transfer result shown | Not tested | — |
 
 T05's first timeout may occur while ARP resolves the destination. Repeat the
 ping and record the full result before treating cross-VLAN connectivity as
-stable. T08 confirms reachability to the router's own simulated WAN interface; it does
-not prove upstream or Internet access. T11 requires the IT-Server address and
-FTP service to be confirmed in the Packet Tracer project before testing.
+stable. T08 confirms reachability to the router's own simulated WAN interface;
+it does not prove upstream or Internet access. T11 confirms FTP login and
+directory listing on `192.168.10.68`; T12 still needs upload and download
+evidence.
 
 ## Addressing and switching evidence
 
@@ -40,6 +42,7 @@ interface status:
 - [FIN-PC1 IP configuration](../evidence/05-ip-configuration-finance.png)
 - [ADMIN-PC1 IP configuration](../evidence/06-ip-configuration-admin.png)
 - [DNS/web server IP configuration](../evidence/13-dns-server-ip-configuration.png)
+- [IT-Server FTP IP configuration](../evidence/16-ftp-server-ip-configuration.png)
 - [ASW-IT MAC address table](../evidence/11-switch-mac-address-table.png)
 - [ASW-IT interface status](../evidence/12-switch-interface-status.png)
 

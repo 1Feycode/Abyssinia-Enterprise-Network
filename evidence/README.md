@@ -20,6 +20,8 @@ limitations.
 | [12-switch-interface-status.png](12-switch-interface-status.png) | ASW-IT interface status |
 | [13-dns-server-ip-configuration.png](13-dns-server-ip-configuration.png) | Static server IP configuration |
 | [14-intranet-web-page.png](14-intranet-web-page.png) | Abyssinia page loaded by IP address; does not verify DNS lookup |
+| [15-ftp-server-login-directory-listing.png](15-ftp-server-login-directory-listing.png) | IT-PC1 logs into IT-Server at `192.168.10.68` and lists files; no transfer is shown |
+| [16-ftp-server-ip-configuration.png](16-ftp-server-ip-configuration.png) | IT-Server static IPv4 address, subnet mask, gateway, and DNS settings |
 
 Do not add fabricated or sample screenshots. Capture any remaining tests from
 the actual simulation, save them with descriptive filenames, and update the

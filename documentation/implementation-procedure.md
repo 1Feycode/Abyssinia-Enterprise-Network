@@ -38,8 +38,9 @@ do not overlap static assignments or DHCP exclusions.
    gateway, and DNS option.
 4. Configure the DNS/web server at `192.168.10.67/27`. Enable DNS and HTTP
    services and create a DNS record for hostname testing.
-5. Record the IT-Server's configured address. Enable the FTP service and
-   verify file access using an authorized test account.
+5. Configure the IT-Server at `192.168.10.68/27` with gateway
+   `192.168.10.94`. Enable FTP and verify login, directory listing, and file
+   upload/download using an authorized test account.
 6. Configure R1-WAN transit, simulated upstream addressing, static routes, and
    NAT as shown in its reference template.
 
