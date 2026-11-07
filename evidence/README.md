@@ -9,6 +9,7 @@
 ![ping the outside interface of DSA siwtch](image-6.png)
 ![ping the inside router interface](image-7.png)
 ![ping the outside router interface](image-8.png)
+![show mac address table on ASW-IT](image-9.png)
 05-successful-ping.png
 06-failed-cross-subnet-ping.png
 07-switch-mac-address-table.png
