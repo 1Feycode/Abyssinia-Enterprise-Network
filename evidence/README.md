@@ -4,6 +4,7 @@
 ![ip-configuration-it-pc](image-1.png)
 ![ip-configuration-hr-pc](image-2.png)
 ![ip-configuration-fin-pc](image-3.png)
+![ip-configuration-admin-pc](image-4.png)
 05-successful-ping.png
 06-failed-cross-subnet-ping.png
 07-switch-mac-address-table.png
