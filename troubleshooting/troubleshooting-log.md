@@ -91,9 +91,10 @@ could not resolve the configured hostname to the web server address.
 shows the unresolved hostname. The DNS-Off state was observed during
 troubleshooting; the supplied [DNS service and record screenshot](../evidence/19-dns-www-abyssinia-com-record.png)
 captures the subsequent DNS Service On state and the A record pointing to `.69`.
+The [successful browser screenshot](../evidence/22-dns-browser-success.png)
+shows FIN-PC1 loading the page from `http://www.abyssinia.com`.
 
-**Verification:** The service state and record are now configured, but a
-successful client lookup and browser load after enabling DNS have not yet been
-captured.
+**Verification:** FIN-PC1 successfully loaded the web page using the hostname
+after DNS was enabled, verifying client-side name resolution and HTTP access.
 
-**Status:** DNS service enabled and record confirmed; client-side retest pending.
+**Status:** Resolved and verified from FIN-PC1.

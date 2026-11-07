@@ -28,6 +28,7 @@ limitations.
 | [19-dns-www-abyssinia-com-record.png](19-dns-www-abyssinia-com-record.png) | DNS Service is On and the A record maps `www.abyssinia.com` to `192.168.10.69` |
 | [20-web-server-http-service.png](20-web-server-http-service.png) | WEB-SERVER HTTP service is On; HTTPS is also On |
 | [21-dns-failure-hostname-unresolved.png](21-dns-failure-hostname-unresolved.png) | FIN-PC1 browser shows “Host Name Unresolved” for `www.abyssinia.com` |
+| [22-dns-browser-success.png](22-dns-browser-success.png) | FIN-PC1 successfully loads the page at `http://www.abyssinia.com` after DNS was enabled |
 
 Do not add fabricated or sample screenshots. Capture any remaining tests from
 the actual simulation, save them with descriptive filenames, and update the
