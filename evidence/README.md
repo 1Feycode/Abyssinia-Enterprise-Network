@@ -11,3 +11,4 @@
 ![ping the outside router interface](image-8.png)
 ![show mac address table on ASW-IT](image-9.png)
 ![show switch interface port](image-10.png)
+![dns-server-ip-configuration](image-11.png)
