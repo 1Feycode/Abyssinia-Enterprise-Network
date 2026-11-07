@@ -12,3 +12,4 @@
 ![show mac address table on ASW-IT](image-9.png)
 ![show switch interface port](image-10.png)
 ![dns-server-ip-configuration](image-11.png)
+![it-pc1-access the dns-server](image-12.png)
