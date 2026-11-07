@@ -36,9 +36,17 @@ do not overlap static assignments or DHCP exclusions.
    assigning its `176.16.0.1/30` address.
 3. Create DHCP exclusions and department pools. Verify each pool's network,
    gateway, and DNS option.
-4. Configure the DNS server at `192.168.10.67/27` and enable DNS. Configure
-   the separate web server at `192.168.10.69/27`, enable HTTP, and add an A
-   record on the DNS server pointing the chosen hostname to `192.168.10.69`.
+4. Configure the DNS server at `192.168.10.67/27` and set DNS Service to
+   **On**. Configure the separate web server at `192.168.10.69/27` and set
+   HTTP to **On**. On the DNS server, add an A record:
+
+   | Name | Type | Address |
+   |---|---|---|
+   | `www.abyssinia.com` | A Record | `192.168.10.69` |
+
+   Click **Add** and **Save**. In this Packet Tracer lab, the name resolves
+   using the configured DNS server; this does not create or imply public
+   Internet DNS for `abyssinia.com`.
 5. Configure the IT-Server and FTP service using the
    [FTP setup guide](#5-set-up-the-ftp-server).
 6. Configure R1-WAN transit, simulated upstream addressing, static routes, and
@@ -95,8 +103,11 @@ expected result or a configured command.
 
 - Check device names, VLAN membership, trunk status, interface status, DHCP
   leases, and routing tables.
-- Verify client-to-client and cross-VLAN pings, DNS lookup of the web-server
-  hostname, HTTP access to `192.168.10.69`, and FTP file transfer.
+- On the DNS server, confirm DNS Service is **On** and the
+  `www.abyssinia.com` A record points to `192.168.10.69`.
+- Verify client-to-client and cross-VLAN pings, resolve
+  `www.abyssinia.com` from a client, browse to `http://www.abyssinia.com`, and
+  test FTP file transfer.
 - Confirm upstream/NAT behavior only against a reachable simulated destination.
 - Review the `.pkt` file for lab credentials before publishing.
 - Ensure diagrams, configuration templates, address tables, and evidence all

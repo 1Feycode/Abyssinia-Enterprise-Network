@@ -99,25 +99,25 @@ ip dhcp pool IT_POOL
  network 192.168.10.64 255.255.255.224
  default-router 192.168.10.94
  dns-server 192.168.10.67
- domain-name abyssinia.local
+ domain-name abyssinia.com
 
 ip dhcp pool FINANCE_POOL
  network 192.168.10.128 255.255.255.224
  default-router 192.168.10.158
  dns-server 192.168.10.67
- domain-name abyssinia.local
+ domain-name abyssinia.com
 
 ip dhcp pool HR_POOL
  network 192.168.10.96 255.255.255.224
  default-router 192.168.10.126
  dns-server 192.168.10.67
- domain-name abyssinia.local
+ domain-name abyssinia.com
 
 ip dhcp pool ADMIN_POOL
  network 192.168.10.0 255.255.255.192
  default-router 192.168.10.1
  dns-server 192.168.10.67
- domain-name abyssinia.local
+ domain-name abyssinia.com
 
 ip route 0.0.0.0 0.0.0.0 176.16.0.2
 end

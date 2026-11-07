@@ -45,8 +45,11 @@ flowchart TB
 The [Packet Tracer topology screenshot](packet-tracer/Topology.png) shows the
 simulation workspace.
 
-The multilayer switch provides departmental gateways and connects the access
-switches, separate DNS and web servers, the FTP server, and the WAN router.
+The DNS server is configured with an A record for `www.abyssinia.com` pointing
+to the web server at `192.168.10.69`. This is a lab DNS entry and does not
+provide public DNS for the `.com` domain. The multilayer switch provides
+departmental gateways and connects the access switches, separate DNS and web
+servers, the FTP server, and the WAN router.
 Department VLANs are routed by the core; the current configuration does not
 include ACLs to restrict inter-department traffic. The web server's IP
 configuration is captured; verify HTTP and DNS name resolution against the
@@ -92,8 +95,9 @@ file, review and rotate any credentials stored inside the simulation.
 
 - Verify same-VLAN client-to-client connectivity and repeat the inter-VLAN ping
   that showed one initial timeout.
-- Verify that the DNS server resolves the web server's hostname to
-  `192.168.10.69`, then open the site by hostname. The earlier browser screenshot
+- Verify `www.abyssinia.com` resolves to `192.168.10.69` and open the site by
+  hostname. DNS Service is now On and the record is configured, but a client
+  lookup and browser test are not yet captured. The earlier browser screenshot
   targets `.67` and predates the separate web server.
 - Verify FTP file upload and download from an authorized client; the captured
   evidence currently confirms login and directory listing only.

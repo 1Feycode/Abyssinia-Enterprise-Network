@@ -25,6 +25,8 @@ limitations.
 | [16-ftp-server-ip-configuration.png](16-ftp-server-ip-configuration.png) | IT-Server static IPv4 address, subnet mask, gateway, and DNS settings |
 | [17-web-server-ip-configuration.png](17-web-server-ip-configuration.png) | Web server static IPv4 address `192.168.10.69`, mask, gateway, and DNS |
 | [18-web-server-incorrect-subnet-mask.png](18-web-server-incorrect-subnet-mask.png) | Before-fix WEB-SERVER configuration showing incorrect `/24` mask `255.255.255.0` |
+| [19-dns-www-abyssinia-com-record.png](19-dns-www-abyssinia-com-record.png) | DNS Service is On and the A record maps `www.abyssinia.com` to `192.168.10.69` |
+| [20-web-server-http-service.png](20-web-server-http-service.png) | WEB-SERVER HTTP service is On; HTTPS is also On |
 
 Do not add fabricated or sample screenshots. Capture any remaining tests from
 the actual simulation, save them with descriptive filenames, and update the
