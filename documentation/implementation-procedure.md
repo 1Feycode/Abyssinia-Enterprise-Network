@@ -54,9 +54,10 @@ do not overlap static assignments or DHCP exclusions.
 7. Apply the simple IT ping restriction on DSW-CORE. The
    [core configuration template](../configs/DSW-CORE.txt) defines the named
    ACL and applies it outbound on VLAN 20. This blocks other routed networks
-   from pinging IT hosts or the VLAN 20 gateway, while allowing IT-initiated
-   pings and all other IP traffic. It does not block pings between clients
-   within VLAN 20. No NAT changes are needed for this policy.
+   from pinging IT host addresses, while allowing IT-initiated pings and all
+   other IP traffic. This SVI ACL does not block pings to the VLAN 20 gateway
+   itself, `192.168.10.94`, or pings between clients within VLAN 20. No NAT
+   changes are needed for this policy.
 
 ## 5. Set up the FTP server
 

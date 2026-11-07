@@ -43,11 +43,11 @@ calculations are in [VLSM calculations](../ip-addressing/vlsm-calculations.md).
 - **ASW-IT, ASW-FINANCE, ASW-HR, ASW-ADMIN:** endpoint access ports and trunks
   to DSW-CORE; management addresses are in VLAN 100.
 - **DNS server:** static `192.168.10.67/27`, gateway `192.168.10.94`. It
-  provides DNS; hostname resolution for the web server still needs testing.
+  provides DNS; FIN-PC1 successfully loaded the web page by hostname.
 - **Web server:** static `192.168.10.69/27`, gateway `192.168.10.94`. Its IP
-  configuration is captured. HTTP service and hostname-based browsing still
-  need verification. The earlier browser screenshot targets `.67`, before the
-  web server was separated.
+  configuration and HTTP service are captured. FIN-PC1 successfully browsed
+  to `http://www.abyssinia.com`; the earlier browser screenshot targeting `.67`
+  predates the separate web server.
 - **IT-Server:** file-storage server at `192.168.10.68/27` using FTP. Evidence
   shows a successful client login and directory listing; file upload/download
   still needs to be verified.
@@ -56,15 +56,17 @@ calculations are in [VLSM calculations](../ip-addressing/vlsm-calculations.md).
 
 ## 4. Security and design boundaries
 
-DSW-CORE applies the named extended ACL `IT-INBOUND-PING-RESTRICTION` outbound
-on VLAN 20. It denies ICMP echo requests from other routed networks to the IT
-subnet, including its gateway, and permits all other IP traffic. IT clients can
-still initiate pings to other VLANs; replies are permitted. Pings between
-clients on VLAN 20 are not filtered because they are switched locally rather
-than routed through the SVI. This is a narrow ping policy, not full isolation
-of IT or a general inter-VLAN firewall. Switch templates enable SSH and shut
-down unused access ports; they use credential placeholders that must be
-replaced locally.
+The DSW-CORE reference template applies the named extended ACL
+`IT-INBOUND-PING-RESTRICTION` outbound on VLAN 20. It denies routed ICMP echo
+requests to IT host addresses and permits all other IP traffic. Because traffic
+to the SVI's own gateway address is handled by the switch rather than
+forwarded out the SVI, this ACL does not block pings to `192.168.10.94`.
+IT clients can initiate pings to other VLANs and receive replies. Same-VLAN
+client traffic is switched locally and is not filtered by this SVI ACL. The
+policy is not full isolation or a general inter-VLAN firewall. The ACL is
+present in the template but has not yet been confirmed in the Packet Tracer
+simulation. Switch templates enable SSH and shut down unused access ports; they
+use credential placeholders that must be replaced locally.
 
 The `.pkt` file may contain credentials from the simulation. Rotate or remove
 those credentials before publishing the file. The simulated upstream network
@@ -72,27 +74,28 @@ does not represent verified Internet connectivity.
 
 ## 5. Verification summary
 
-Available screenshots show same-VLAN client pings and successful pings to the
-core transit interface, router transit interface, and router's simulated WAN
-interface. New inter-VLAN pings from IT-PC1 showed one initial timeout followed
-by three replies. The ACL policy is in the reference configuration; its deny
-and allow behavior still needs to be tested in Packet Tracer after applying
-the template.
-
-Same-VLAN client-to-client tests, DNS resolution of the web server hostname,
-HTTP access to the separate web server, FTP file upload/download, and end-to-end
-upstream access are not evidenced. The detailed results and screenshot links
-are in the [connectivity test report](../testing/connectivity-tests.md).
+Screenshots show successful same-VLAN ping commands, DNS-based browsing from
+FIN-PC1, FTP login and directory listing, and pings to the core transit,
+router transit, and router simulated-WAN interfaces. However, the IT-PC1
+same-VLAN ping target matches its captured own address, so that screenshot
+does not prove client-to-client reachability. Several IT-initiated inter-VLAN
+captures show an initial timeout followed by three replies. The ACL behavior,
+FTP file transfers, direct-IP HTTP access from IT-PC1, and reachability beyond
+the router remain unverified. See the [connectivity test report](../testing/connectivity-tests.md)
+for exact results and evidence.
 
 ## 6. Recommendations
 
 1. Apply the VLAN 20 ping ACL and capture both a denied ping from another VLAN
-   to an IT client and a successful ping initiated by an IT client.
-2. Add/verify a DNS A record for the web server at `192.168.10.69`, then test
-   both HTTP access by IP and browsing by hostname.
+   to an IT host and a successful ping initiated by an IT client. Note that
+   this ACL does not block pinging the VLAN 20 gateway.
+2. Capture direct-IP HTTP access to `192.168.10.69`; hostname-based browsing
+   from FIN-PC1 is already evidenced.
 3. Test an authorized FTP file upload and download; current evidence confirms
    login and directory listing only.
 4. Consider additional inter-department ACLs and restrict management access.
-5. Validate NAT and routing to a simulated host beyond R1-WAN.
-6. Consider redundant links, switch hardening, and a consistent configuration
+5. Confirm same-VLAN ping destinations match the other clients' current
+   addresses, then recapture any inconclusive tests.
+6. Validate NAT and routing to a simulated host beyond R1-WAN.
+7. Consider redundant links, switch hardening, and a consistent configuration
    backup process as future improvements.

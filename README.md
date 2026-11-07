@@ -6,6 +6,8 @@ network for four departments: Administration, IT, Human Resources, and Finance.
 The design uses department VLANs, Layer 3 switching, DHCP, a simulated WAN edge,
 an IT file/FTP server, and separate DNS and web servers.
 
+![Abyssinia Technologies headquarters network topology](packet-tracer/Topology.png)
+
 > **Project status:** The Packet Tracer simulation and supporting evidence are
 > included. Some connectivity checks are demonstrated in screenshots; the
 > remaining checks are explicitly marked as pending in the test report.
@@ -21,6 +23,7 @@ an IT file/FTP server, and separate DNS and web servers.
 | Shared VLANs | Native 99, management 100 |
 | Internal addressing | `192.168.10.0/24`, subnetted with VLSM |
 | Routing and services | Inter-VLAN routing and DHCP on DSW-CORE; static routing and NAT on R1-WAN |
+| Name-based web access | `www.abyssinia.com` resolves to the separate web server in the lab |
 | Simulation | Cisco Packet Tracer; the upstream cloud is simulated |
 
 ## Architecture
@@ -54,20 +57,31 @@ flowchart TB
 | Department printers | Printer-PT | 3 |
 | Simulated upstream cloud | Cloud-PT | 1 |
 
-The [Packet Tracer topology screenshot](packet-tracer/Topology.png) shows the
-simulation workspace and device model labels.
+The [full-size topology image](packet-tracer/Topology.png) shows the Packet
+Tracer device model labels, departmental layout, servers, and network links.
 
 The DNS server is configured with an A record for `www.abyssinia.com` pointing
 to the web server at `192.168.10.69`. This is a lab DNS entry and does not
 provide public DNS for the `.com` domain. The multilayer switch provides
 departmental gateways and connects the access switches, separate DNS and web
-servers, the FTP server, and the WAN router. The DSW-CORE configuration
-template includes a simple ACL that blocks other routed networks from pinging
-the IT subnet while allowing IT-initiated pings and all other IP traffic. The
-ACL still needs to be applied to and tested in the Packet Tracer simulation.
+servers, the FTP server, and the WAN router. The DSW-CORE reference
+configuration includes a simple ACL that blocks other routed
+networks from pinging IT hosts while allowing IT-initiated pings and all other
+IP traffic. It does not block pings to the VLAN 20 gateway itself. The ACL
+still needs to be applied to and tested in the Packet Tracer simulation.
 The IT-Server provides file storage over FTP at `192.168.10.68`; a successful
 login and directory listing are captured, while file upload/download still
 needs verification.
+
+## What is verified
+
+| Area | Evidence-based status |
+|---|---|
+| DNS and web | FIN-PC1 loads `http://www.abyssinia.com`; the DNS record points to `192.168.10.69` |
+| FTP | Client login and directory listing work; file transfers are not yet shown |
+| Department pings | Reciprocal Admin pings are evidenced; IT, HR, and Finance peer targets need confirmation |
+| VLAN 20 ACL | Included in the DSW-CORE template; Packet Tracer application and behavior remain unverified |
+| WAN/NAT | Router interface checks are captured; reachability beyond the router is unverified |
 
 ## Evidence
 
@@ -88,7 +102,7 @@ descriptive filename and is indexed in the [evidence guide](evidence/README.md).
 
 ## Reproduce the project
 
-1. Open `packet-tracer/abyssinia-enterprise-network.pkt` in Cisco Packet Tracer.
+1. Open the confirmed final `.pkt` file from `packet-tracer/` in Cisco Packet Tracer.
 2. Review the [address plan](ip-addressing/ip-addressing-table.csv) and device
    configurations in `configs/`.
 3. Use the [implementation procedure](documentation/implementation-procedure.md)
@@ -99,6 +113,10 @@ descriptive filename and is indexed in the [evidence guide](evidence/README.md).
    [connectivity-tests.md](testing/connectivity-tests.md) and add genuine
    screenshots or command output before marking them verified.
 
+Two `.pkt` files are currently in `packet-tracer/`. Compare them, choose the
+intended final simulation, and remove or clearly label the backup before
+sharing the project.
+
 The text configurations are reference templates. Replace local credential
 placeholders before applying them. Before publishing or sharing the `.pkt`
 file, review and rotate any credentials stored inside the simulation.
@@ -106,9 +124,10 @@ file, review and rotate any credentials stored inside the simulation.
 ## Known limitations and next steps
 
 - Apply the VLAN 20 ping ACL in the Packet Tracer file and verify that
-  other-VLAN pings to IT are blocked while IT-initiated pings to other VLANs
-  still work. Same-VLAN client connectivity and DNS-based browser access have
-  screenshot evidence.
+  other-VLAN pings to IT hosts are blocked while IT-initiated pings to other
+  VLANs still work. The ACL does not block pings to the VLAN 20 gateway.
+- Confirm each same-VLAN ping screenshot targets the other client's current IP;
+  the IT-PC1 ping target matches IT-PC1's captured address.
 - Verify FTP file upload and download from an authorized client; the captured
   evidence currently confirms login and directory listing only.
 - Validate upstream routing/NAT beyond the router's own simulated WAN interface.
