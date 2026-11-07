@@ -1,12 +1,7 @@
 
 # Project Evidence
+![topology](image.png)
 
-Save genuine screenshots from your Packet Tracer
-implementation in this folder.
-
-Recommended screenshots:
-
-01-enterprise-topology.png
 02-device-connections.png
 03-ip-configuration-it.png
 04-ip-configuration-finance.png
