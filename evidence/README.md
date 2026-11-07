@@ -1,15 +1,26 @@
-
 # Project Evidence
-![topology](image.png)
-![ip-configuration-it-pc](image-1.png)
-![ip-configuration-hr-pc](image-2.png)
-![ip-configuration-fin-pc](image-3.png)
-![ip-configuration-admin-pc](image-4.png)
-![ping gateway and out network pc](image-5.png)
-![ping the outside interface of DSA siwtch](image-6.png)
-![ping the inside router interface](image-7.png)
-![ping the outside router interface](image-8.png)
-![show mac address table on ASW-IT](image-9.png)
-![show switch interface port](image-10.png)
-![dns-server-ip-configuration](image-11.png)
-![it-pc1-access the dns-server](image-12.png)
+
+These screenshots were captured from the Packet Tracer implementation. They
+are evidence of the screen state shown, not proof of untested behavior. See the
+[test report](../testing/connectivity-tests.md) for observed results and
+limitations.
+
+| Screenshot | What it shows |
+|---|---|
+| [02-device-connections.png](02-device-connections.png) | Packet Tracer topology and device connections |
+| [03-ip-configuration-it.png](03-ip-configuration-it.png) | IT-PC1 DHCP address, mask, gateway, and DNS |
+| [04-ip-configuration-hr.png](04-ip-configuration-hr.png) | HR-PC1 DHCP configuration |
+| [05-ip-configuration-finance.png](05-ip-configuration-finance.png) | FIN-PC1 DHCP configuration |
+| [06-ip-configuration-admin.png](06-ip-configuration-admin.png) | ADMIN-PC1 DHCP configuration |
+| [07-inter-vlan-connectivity.png](07-inter-vlan-connectivity.png) | IT-PC1 ping to gateway and HR-PC1; first HR ping timed out |
+| [08-core-router-link-connectivity.png](08-core-router-link-connectivity.png) | IT-PC1 ping to DSW-CORE transit address |
+| [09-router-lan-connectivity.png](09-router-lan-connectivity.png) | IT-PC1 ping and traceroute to R1-WAN transit address |
+| [10-simulated-wan-connectivity.png](10-simulated-wan-connectivity.png) | IT-PC1 ping and traceroute to R1-WAN's simulated upstream interface |
+| [11-switch-mac-address-table.png](11-switch-mac-address-table.png) | ASW-IT learned MAC address table |
+| [12-switch-interface-status.png](12-switch-interface-status.png) | ASW-IT interface status |
+| [13-dns-server-ip-configuration.png](13-dns-server-ip-configuration.png) | Static server IP configuration |
+| [14-intranet-web-page.png](14-intranet-web-page.png) | Abyssinia page loaded by IP address; does not verify DNS lookup |
+
+Do not add fabricated or sample screenshots. Capture any remaining tests from
+the actual simulation, save them with descriptive filenames, and update the
+test report with the result.

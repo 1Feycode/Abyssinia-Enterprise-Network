@@ -3,15 +3,13 @@ configure terminal
 hostname DSW-CORE
 no ip domain-lookup
 ip domain-name abyssinia.local
-crypto key generate rsa
-1024
-username admin privilege 15 secret Abyssinia2026
+crypto key generate rsa modulus 1024
+username admin privilege 15 secret <REPLACE_WITH_UNIQUE_SECRET>
 
 line vty 0 4
  login local
  exec-timeout 5 0
  transport input ssh
- password Abyssinia2026
 exit
 
 vlan 20
@@ -28,6 +26,7 @@ vlan 100
  name MANAGEMENT
 
 interface range FastEthernet0/1-4
+ switchport mode trunk
  switchport trunk native vlan 99
  switchport trunk allowed vlan 20,30,40,50,99,100
  description TRUNK-TO-ACCESS-SWITCHES
@@ -43,6 +42,7 @@ exit
 
 interface GigabitEthernet0/1
  description ROUTER-LINK-TO-R1-WAN
+ no switchport
  ip address 176.16.0.1 255.255.255.252
  no shutdown
 exit
@@ -84,6 +84,9 @@ ip dhcp excluded-address 192.168.10.65 192.168.10.70
 ip dhcp excluded-address 192.168.10.97 192.168.10.102
 ip dhcp excluded-address 192.168.10.129 192.168.10.134
 ip dhcp excluded-address 192.168.10.193 192.168.10.197
+ip dhcp excluded-address 192.168.10.94
+ip dhcp excluded-address 192.168.10.126
+ip dhcp excluded-address 192.168.10.158
 
 ip dhcp pool IT_POOL
  network 192.168.10.64 255.255.255.224

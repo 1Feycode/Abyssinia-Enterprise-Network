@@ -1,133 +1,87 @@
+# Enterprise Headquarters Network
+## Design and Implementation Report
 
-# ABYSSINIA TECHNOLOGIES PLC
+## 1. Executive summary
 
-# ENTERPRISE HEADQUARTERS NETWORK
-# DESIGN AND IMPLEMENTATION REPORT
+This Packet Tracer project models a headquarters network for Abyssinia
+Technologies PLC. It serves four departments, plans for growth from 48 to 100
+employees, and uses departmental VLANs, a multilayer switch, DHCP, and a
+simulated WAN edge. Screenshots provide evidence for selected client,
+switching, server, and routing checks. Tests without evidence are listed as
+pending rather than assumed successful.
 
-## 1. Executive Summary
+## 2. Requirements and architecture
 
-This project proposes an enterprise network infrastructure
-for Abyssinia Technologies PLC.
+The design separates Administration, IT, HR, and Finance at Layer 2 and uses
+DSW-CORE for inter-VLAN routing and departmental default gateways. Four access
+switches connect departmental endpoints to the core using 802.1Q trunks. The
+core connects the DNS/web server and R1-WAN; R1-WAN connects to a simulated
+upstream cloud.
 
-The design supports four departments, 48 current
-employees, and a planned capacity of 100 employees.
+### VLANs and subnets
 
-The proposed architecture uses hierarchical switching
-and an IPv4 addressing scheme based on VLSM.
+| Purpose | VLAN | Subnet | Gateway / address |
+|---|---:|---|---|
+| Administration | 50 | `192.168.10.0/26` | `192.168.10.1` |
+| IT | 20 | `192.168.10.64/27` | `192.168.10.94` |
+| HR | 40 | `192.168.10.96/27` | `192.168.10.126` |
+| Finance | 30 | `192.168.10.128/27` | `192.168.10.158` |
+| Management | 100 | `192.168.10.192/27` | `192.168.10.193` |
+| Core-to-router transit | — | `176.16.0.0/30` | Core `.1`, router `.2` |
+| Simulated upstream | — | `200.64.100.0/24` | Router `.2`, next hop `.1` |
 
-## 2. Introduction
+The departmental and management allocations are within
+`192.168.10.0/24`. The transit and simulated upstream networks are separate
+links. The detailed host assignments and exclusions are in the
+[IP address table](../ip-addressing/ip-addressing-table.csv); the subnet
+calculations are in [VLSM calculations](../ip-addressing/vlsm-calculations.md).
 
-The company requires a structured and scalable network
-to support communication and resource sharing between
-its departments.
+## 3. Device roles and services
 
-## 3. Problem Statement
+- **DSW-CORE:** VLAN gateways, inter-VLAN routing, DHCP pools, and default route
+  toward R1-WAN.
+- **ASW-IT, ASW-FINANCE, ASW-HR, ASW-ADMIN:** endpoint access ports and trunks
+  to DSW-CORE; management addresses are in VLAN 100.
+- **DNS/web server:** static `192.168.10.67/27`, gateway `192.168.10.94`.
+  The evidence shows its IP configuration and HTTP access by IP address.
+- **R1-WAN:** routed core transit, simulated upstream interface, static routes,
+  and NAT overload configuration.
 
-The company requires an organized network architecture
-that supports its current operations and future growth.
+The topology also shows a separate `IT-Server` endpoint. Its role and address
+are not documented in the available configuration table and should be resolved
+before calling the project complete.
 
-## 4. Project Objectives
+## 4. Security and design boundaries
 
-- Design an enterprise network topology.
-- Calculate departmental subnets using VLSM.
-- Configure Cisco network devices.
-- Assign static IP addresses.
-- Verify connectivity.
-- Identify and resolve configuration errors.
+Department VLANs provide Layer 2 segmentation, but the current core routes
+between them and no inter-VLAN ACLs are configured. Do not describe departments
+as access-isolated. Switch templates enable SSH and shut down unused access
+ports; they use credential placeholders that must be replaced locally.
 
-## 5. Requirements Analysis
+The `.pkt` file may contain credentials from the simulation. Rotate or remove
+those credentials before publishing the file. The simulated upstream network
+does not represent verified Internet connectivity.
 
-Administration: 40 planned hosts
-IT: 25 planned hosts
-HR: 20 planned hosts
-Finance: 15 planned hosts
+## 5. Verification summary
 
-Assigned network: 192.168.10.0/24
+Available screenshots show a DHCP address on IT-PC1, successful pings to the
+core transit interface, router transit interface, and router's simulated WAN
+interface, plus an HTTP page loaded from the server by IP. An inter-VLAN ping
+from IT-PC1 to an HR address received three of four replies after an initial
+timeout. Repeat this test to confirm steady-state behavior.
 
-## 6. Network Architecture
+Same-VLAN client-to-client tests, DNS resolution by hostname, and end-to-end
+upstream access are not evidenced. The detailed results and screenshot links
+are in the [connectivity test report](../testing/connectivity-tests.md).
 
-The network follows a hierarchical physical design with a core
-switch connected to four departmental access switches. Each
-access switch connects to the local department PCs and printers,
-while the core switch provides VLAN segmentation and inter-VLAN
-routing.
+## 6. Recommendations
 
-The topology includes a WAN router connected to the external ISP
-network and a DNS server in the IT VLAN connected to the DSW-CORE.
-
-## 7. IP Addressing Design
-
-The assigned network is 192.168.10.0/24 and VLSM was used to
-allocate departmental subnets as follows:
-
-- Administration: 192.168.10.0/26
-- IT: 192.168.10.64/27
-- HR: 192.168.10.96/27
-- Finance: 192.168.10.128/27
-- DNS server: 192.168.10.67/27
-- Management VLAN: 192.168.10.192/27
-
-The core switch uses SVI gateways for each VLAN, while the router
-uses 192.168.10.222/27 on the LAN side and 176.16.0.2/30 on the WAN side.
-## 8. Hardware and Software Requirements
-
-Hardware:
-- Cisco 2911 router
-- Cisco 3560 multilayer switch
-- Cisco 2960 access switches
-- Workstations
-- Internal server
-
-Software:
-- Cisco Packet Tracer
-- Visual Studio Code
-
-## 9. Implementation
-
-The implementation includes:
-- DSW-CORE as the layer-3 switching and DHCP server
-- ASW-IT, ASW-FINANCE, ASW-HR, and ASW-ADMIN as departmental access switches
-- VLAN assignment by department: IT=20, FINANCE=30, HR=40, ADMIN=50
-- Native VLAN 99 and management VLAN 100
-- Trunks configured between the core and each access switch
-- DHCP pools configured for each department subnet
-- DNS server at 192.168.10.67 in the IT VLAN
-- SSH enabled on each switch with local authentication
-
-## 10. Testing and Verification
-
-Current configuration verification confirms the following:
-- VLANs are created and assigned correctly
-- Access ports are mapped to their department VLANs
-- Trunks allow only the required VLANs
-- Inter-VLAN routing is enabled on DSW-CORE
-- DHCP pools are configured for each department subnet
-- Static routes are configured for internal reachability and WAN access
-
-Actual ping and command-output testing remains to be completed in the lab environment.
-## 11. Troubleshooting
-
-Document each identified fault, its root cause,
-corrective action, and verification results.
-
-## 12. Limitations
-
-This phase does not implement:
-- VLAN segmentation
-- Inter-VLAN routing
-- DHCP
-- OSPF
-- ACLs
-- Firewall policies
-- Network redundancy
-
-## 13. Future Recommendations
-
-Future development should introduce departmental
-VLANs, trunk links, inter-VLAN routing, DHCP,
-OSPF, ACLs, firewall security, and monitoring.
-
-## 14. Conclusion
-
-Summarize the implemented design, subnet allocation,
-testing results, and future expansion opportunities.
+1. Re-run the initial-timeout inter-VLAN test and test client pairs within each
+   department.
+2. Enable and verify DNS records, then test name resolution rather than only
+   opening the server by IP.
+3. Assign/document the separate IT-Server or remove it from the topology.
+4. Define and test inter-department ACLs and restrict management access.
+5. Validate NAT and routing to a simulated host beyond R1-WAN.
+6. Consider redundant links, switch hardening, and a consistent configuration
+   backup process as future improvements.

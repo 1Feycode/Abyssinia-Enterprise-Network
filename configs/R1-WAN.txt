@@ -1,14 +1,5 @@
-==================================================
-ABYSSINIA TECHNOLOGIES PLC
-ROUTER CONFIGURATION RECORD
-==================================================
-
-DEVICE: R1-WAN
-MODEL: Cisco 2911
-
-ROLE:
-Represents the company's WAN edge router.
-
+! Reference configuration template for Cisco 2911 in Packet Tracer.
+! The 200.64.100.0/24 network is simulated and is not an Internet connection.
 
 enable
 configure terminal
@@ -16,19 +7,22 @@ hostname R1-WAN
 no ip domain-lookup
 
 interface GigabitEthernet0/0
- description LAN-TO-DSW
+ description TRANSIT-TO-DSW-CORE
  ip address 176.16.0.2 255.255.255.252
- no shutdown
  ip nat inside
+ no shutdown
+exit
 
 interface GigabitEthernet0/1
- description WAN-TO-CLOUD
+ description SIMULATED-UPSTREAM
  ip address 200.64.100.2 255.255.255.0
- no shutdown
  ip nat outside
+ no shutdown
+exit
 
 access-list 1 permit 192.168.10.0 0.0.0.255
 ip nat inside source list 1 interface GigabitEthernet0/1 overload
+
 ip route 192.168.10.0 255.255.255.192 176.16.0.1
 ip route 192.168.10.64 255.255.255.224 176.16.0.1
 ip route 192.168.10.96 255.255.255.224 176.16.0.1
@@ -38,12 +32,8 @@ ip route 0.0.0.0 0.0.0.0 200.64.100.1
 end
 write memory
 
-FUTURE CONFIGURATION:
-- NAT
-- Access control lists
-- WAN connectivity hardening
-
-VERIFICATION COMMANDS:
-show ip interface brief
-show running-config
-show ip route
+! Verification commands:
+! show ip interface brief
+! show running-config
+! show ip route
+! show ip nat translations

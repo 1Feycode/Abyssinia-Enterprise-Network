@@ -1,69 +1,44 @@
+# Troubleshooting Scenarios
 
-# Network Troubleshooting Log
+The scenarios below are planned lab exercises, not claims of faults observed
+in the current simulation. Reproduce each issue, record the actual diagnostic
+output, apply the correction, and update its status before presenting it as a
+completed incident.
 
-Organization: Abyssinia Technologies PLC
+## Scenario 001: Incorrect subnet mask
 
-## Incident 001: Incorrect Subnet Mask
+**Symptom:** IT-PC1 is configured with `192.168.10.65/24` instead of the IT
+subnet mask `255.255.255.224` (`/27`).
 
-Problem:
-IT-PC1 has an incorrect subnet mask.
+**Expected correction:** Keep the host address valid for the IT subnet and
+correct the mask to `/27`. Confirm the gateway is `192.168.10.94`.
 
-Initial configuration:
-IP: 192.168.10.65
-Mask: 255.255.255.0
+**Verification:** Capture `ipconfig` and repeat gateway and cross-VLAN pings.
 
-Expected configuration:
-IP: 192.168.10.65
-Mask: 255.255.255.224
+**Status:** Scenario documented; reproduction and verification pending.
 
-Root Cause:
-Incorrect subnet mask.
+## Scenario 002: Duplicate IP address
 
-Resolution:
-Correct the subnet mask and repeat connectivity tests.
+**Symptom:** Two Finance endpoints are assigned the same IPv4 address.
 
-Verification:
-Record actual ping and IP configuration results.
+**Expected correction:** Restore DHCP assignment or allocate unique static
+addresses from the Finance subnet, excluding the gateway and DHCP exclusions.
 
-Status: Pending practical verification.
+**Verification:** Capture both endpoint configurations and test connectivity;
+use `arp -a` or the switch MAC table as supporting diagnostics.
 
---------------------------------------------------
+**Status:** Scenario documented; reproduction and verification pending.
 
-## Incident 002: Duplicate IP Address
+## Scenario 003: Insufficient subnet capacity
 
-Problem:
-Two Finance PCs have the same IP address.
+**Exercise requirement:** A hypothetical department needs 65 usable host
+addresses. This is not the current Administration requirement, which is 40.
 
-Root Cause:
-Duplicate static IP assignment.
+**Analysis:** A `/26` supports 62 usable hosts and is insufficient. A `/25`
+supports 126 usable hosts, but it would require redesigning the existing
+`192.168.10.0/24` allocations to avoid overlap.
 
-Resolution:
-Assign unique IP addresses to both devices.
+**Verification:** Recalculate all subnets, check for overlap, then validate
+gateway and DHCP assignments in the revised simulation.
 
-Verification:
-Use ipconfig, arp -a, and ping.
-
-Status: Pending practical verification.
-
---------------------------------------------------
-
-## Incident 003: Insufficient Subnet Capacity
-
-Problem:
-Administration requires 65 usable host addresses.
-
-Current allocation:
-192.168.10.0/26
-
-Available usable addresses:
-62
-
-Root Cause:
-The existing subnet is too small.
-
-Resolution:
-Recalculate the entire VLSM allocation.
-A /25 is needed for 65 hosts, but the
-other departments' subnets must also fit.
-
-Status: Analysis completed; redesign pending.
+**Status:** Analysis documented; redesign and lab verification pending.

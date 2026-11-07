@@ -1,54 +1,59 @@
-
 # Project Overview
 
-## 1. Organization
-Abyssinia Technologies PLC
+## Organization and need
 
-## 2. Background
-Abyssinia Technologies PLC is a growing technology
-company that requires a structured network
-infrastructure to support communication and
-resource sharing between its departments.
+Abyssinia Technologies PLC is represented as a growing organization with a
+headquarters network for Administration, Information Technology, Human
+Resources, and Finance. The design supports 48 current employees and plans for
+100 employees.
 
-## 3. Existing Problem
-The organization requires an organized and scalable
-network infrastructure capable of supporting its
-current employees and future expansion.
+## Objectives
 
-## 4. Proposed Solution
-Design a hierarchical enterprise network consisting
-of a distribution switch, departmental access
-switches, workstations, an internal server, and a
-WAN edge router representation.
+- Organize departmental traffic with VLANs and a hierarchical switch design.
+- Allocate IPv4 subnets for departments and network management.
+- Provide inter-VLAN routing and dynamically assigned client addresses.
+- Connect the internal network to a simulated WAN through a router.
+- Record implementation evidence and distinguish verified results from
+  outstanding tests.
 
-## 5. Departments
+## Department capacity
 
-| Department | Current Employees | Planned Capacity |
-|---|---:|---:|
-| Administration | 18 | 40 |
-| IT | 12 | 25 |
-| HR | 10 | 20 |
-| Finance | 8 | 15 |
-| Total | 48 | 100 |
+| Department | Current employees | Planned capacity | VLAN | Subnet |
+|---|---:|---:|---:|---|
+| Administration | 18 | 40 | 50 | `192.168.10.0/26` |
+| IT | 12 | 25 | 20 | `192.168.10.64/27` |
+| HR | 10 | 20 | 40 | `192.168.10.96/27` |
+| Finance | 8 | 15 | 30 | `192.168.10.128/27` |
+| **Total** | **48** | **100** |  |  |
 
-## 6. Project Scope
-This implementation phase focuses on the physical topology,
-IPv4 addressing, VLSM, VLAN segmentation, inter-VLAN routing,
-DHCP, DNS, SSH management, static routing, and basic troubleshooting.
+Management uses VLAN 100 and `192.168.10.192/27`. VLAN 99 is reserved as the
+trunk native VLAN. The Layer 3 transit link and simulated WAN use separate
+address blocks, as detailed in the [address plan](../ip-addressing/).
 
-## 7. Current Implementation Status
-The project currently includes:
-- Department-based VLANs: IT=20, Finance=30, HR=40, Admin=50
-- Native VLAN 99 and management VLAN 100
-- Trunk links between access switches and the DSW-CORE switch
-- Inter-VLAN routing on DSW-CORE
-- DHCP pools for each departmental subnet
-- Static DNS server on the IT VLAN at 192.168.10.67
-- SSH access enabled on all switches
-- Routing between internal subnets and the WAN router
+## Implemented design
 
-## 8. Expected Outcome
-A working VLAN-based enterprise network foundation that supports
-segmentation, inter-VLAN communication, centralized DHCP, and
-basic secure administrative access. Further enhancements such as
-NAT, ACLs, OSPF, and more advanced WAN security remain for later phases.
+- DSW-CORE is the Layer 3 distribution switch, departmental default gateway,
+  and DHCP server.
+- Four access switches connect departmental endpoints over 802.1Q trunks.
+- The core also connects a DNS/web server with static address
+  `192.168.10.67/27`.
+- R1-WAN provides a routed transit to the core, a simulated upstream interface,
+  static routes, and configured NAT overload.
+- SSH configuration is included in the switch templates.
+
+The current configuration routes between department VLANs and has no ACLs
+blocking that traffic. NAT and the upstream route are configured in the text
+template, but end-to-end upstream access has not been demonstrated by the
+available evidence.
+
+## Scope and limitations
+
+This is a Packet Tracer learning project, not a production deployment. The
+simulation contains a separate `IT-Server` endpoint in addition to the documented
+DNS/web server; its address and purpose are not yet recorded. DNS lookup by
+hostname, same-department client-to-client tests, ACL policy, redundancy, and
+end-to-end WAN access remain to be verified or implemented.
+
+See the [network design report](network-design-report.md), [implementation
+procedure](implementation-procedure.md), and [connectivity test report](../testing/connectivity-tests.md)
+for details.

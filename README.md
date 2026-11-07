@@ -1,65 +1,97 @@
-
 # Abyssinia Technologies PLC
-## Enterprise Headquarters Network Design and Implementation
+## Enterprise Headquarters Network
 
-### Project Overview
-This project focuses on designing and implementing a scalable enterprise network infrastructure for Abyssinia Technologies PLC.
+A Cisco Packet Tracer project documenting a small, expandable headquarters
+network for four departments: Administration, IT, Human Resources, and Finance.
+The design uses department VLANs, Layer 3 switching, DHCP, a simulated WAN edge,
+and a DNS/web server.
 
-The company has four departments:
-- Administration
-- Information Technology
-- Human Resources
-- Finance
+> **Project status:** The Packet Tracer simulation and supporting evidence are
+> included. Some connectivity checks are demonstrated in screenshots; the
+> remaining checks are explicitly marked as pending in the test report.
 
-The company currently has 48 employees and plans to expand to 100 employees.
+## At a glance
+
+| Area | Design |
+|---|---|
+| Current / planned staff | 48 / 100 |
+| Departments | Administration, IT, HR, Finance |
+| Switching | One multilayer distribution switch and four access switches |
+| Department VLANs | IT 20, Finance 30, HR 40, Administration 50 |
+| Shared VLANs | Native 99, management 100 |
+| Internal addressing | `192.168.10.0/24`, subnetted with VLSM |
+| Routing and services | Inter-VLAN routing and DHCP on DSW-CORE; static routing and NAT on R1-WAN |
+| Simulation | Cisco Packet Tracer; the upstream cloud is simulated |
+
 ## Architecture
 
-![Topology Architecture](packet-tracer/Topology.png)
+```mermaid
+flowchart TB
+    UP["Simulated upstream<br/>200.64.100.0/24"] --- R1["R1-WAN<br/>Gi0/1: 200.64.100.2"]
+    R1 ---|"Transit 176.16.0.0/30"| CORE["DSW-CORE<br/>SVI gateways, DHCP, inter-VLAN routing"]
+    CORE ---|"VLAN 20"| DNS["DNS/web server<br/>192.168.10.67"]
+    CORE ---|"802.1Q trunks"| IT["ASW-IT<br/>VLAN 20"]
+    CORE ---|"802.1Q trunks"| HR["ASW-HR<br/>VLAN 40"]
+    CORE ---|"802.1Q trunks"| FIN["ASW-FINANCE<br/>VLAN 30"]
+    CORE ---|"802.1Q trunks"| ADMIN["ASW-ADMIN<br/>VLAN 50"]
+    IT --- ITPC["IT clients and IT-Server<br/>server role/address pending"]
+    HR --- HRPC["HR clients and printer"]
+    FIN --- FINPC["Finance clients and printer"]
+    ADMIN --- ADMINPC["Administration clients and printer"]
+```
 
-### Project Objectives
-1. Design a hierarchical enterprise network.
-2. Apply IPv4 addressing and VLSM.
-3. Configure network devices.
-4. Test network connectivity.
-5. Identify and resolve network faults.
-6. Produce professional network documentation.
+The [Packet Tracer topology screenshot](packet-tracer/Topology.png) shows the
+simulation workspace.
 
-### Network Technologies
-- IPv4 addressing
-- VLSM subnetting
-- Cisco switching
-- Ethernet
-- MAC address learning
-- Cisco Packet Tracer
+The multilayer switch provides departmental gateways and connects the access
+switches, the DNS/web server, and the WAN router. Department VLANs are routed
+by the core; the current configuration does not include ACLs to restrict
+inter-department traffic.
 
-### Tools
-- Cisco Packet Tracer
-- Visual Studio Code
-- Microsoft Excel (optional)
-- Windows Command Prompt
+## Evidence
 
-### Project Structure
-- packet-tracer/: Network simulation
-- configs/: Device configurations
-- documentation/: Technical reports
-- ip-addressing/: Subnetting and IP allocation
-- testing/: Connectivity test results
-- troubleshooting/: Fault investigation records
-- evidence/: Screenshots and implementation evidence
+The screenshots are captured from the Packet Tracer implementation. Each has a
+descriptive filename and is indexed in the [evidence guide](evidence/README.md).
 
-### Current Project Scope
-This implementation covers:
-- Physical enterprise topology
-- IPv4 addressing and VLSM planning
-- VLAN segmentation using department-based VLANs
-- Inter-VLAN routing on the DSW-CORE switch
-- DHCP services for departmental subnets
-- Static DNS server configuration on the IT VLAN
-- SSH access on all switches
-- Static routing between the internal network and the WAN router
-- Shutdown of unused switch ports
+## Repository guide
 
-NAT, deeper WAN security controls, and OSPF are still planned for future enhancement phases.
+| Path | Contents |
+|---|---|
+| [packet-tracer/](packet-tracer/) | Packet Tracer simulation, topology, and server page |
+| [configs/](configs/) | Device configuration templates |
+| [documentation/](documentation/) | Project overview, design report, and implementation procedure |
+| [ip-addressing/](ip-addressing/) | VLSM calculations and device/address table |
+| [testing/](testing/) | Test cases, observed results, and pending verification |
+| [troubleshooting/](troubleshooting/) | Planned fault scenarios and verification status |
+| [evidence/](evidence/) | Screenshots from the simulation |
 
-### Project Status
-Phase 2: VLAN-based enterprise network implementation with routing, DHCP, DNS, and SSH administration.
+## Reproduce the project
+
+1. Open `packet-tracer/abyssinia-enterprise-network.pkt` in Cisco Packet Tracer.
+2. Review the [address plan](ip-addressing/ip-addressing-table.csv) and device
+   configurations in `configs/`.
+3. Use the [implementation procedure](documentation/implementation-procedure.md)
+   to check the topology and device settings.
+4. Run the pending tests in
+   [connectivity-tests.md](testing/connectivity-tests.md) and add genuine
+   screenshots or command output before marking them verified.
+
+The text configurations are reference templates. Replace local credential
+placeholders before applying them. Before publishing or sharing the `.pkt`
+file, review and rotate any credentials stored inside the simulation.
+
+## Known limitations and next steps
+
+- Verify same-VLAN client-to-client connectivity and repeat the inter-VLAN ping
+  that showed one initial timeout.
+- Verify DNS resolution by hostname; the current browser screenshot uses the
+  server IP address and proves HTTP access, not DNS lookup.
+- Confirm the separate `IT-Server` shown in the topology has a documented
+  purpose and address, or remove it from the simulation.
+- Validate upstream routing/NAT beyond the router's own simulated WAN interface.
+- Add and test ACL policy, management-plane restrictions, and redundancy as
+  future improvements.
+
+See the [design report](documentation/network-design-report.md) for the
+implementation details and [test report](testing/connectivity-tests.md) for
+what has and has not been verified.
