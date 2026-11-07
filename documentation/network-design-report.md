@@ -87,19 +87,3 @@ beyond the router remain unverified. See the
 [connectivity test report](../testing/connectivity-tests.md) for exact results
 and evidence.
 
-## 6. Recommendations
-
-1. Extend ACL verification to other departments and non-ICMP services; the
-   current evidence verifies an Administration-to-IT ping is blocked and an
-   IT-to-Administration ping succeeds. Note that this ACL does not block
-   pinging the VLAN 20 gateway.
-2. Capture direct-IP HTTP access to `192.168.10.69`; hostname-based browsing
-   from FIN-PC1 is already evidenced.
-3. Test an authorized FTP file upload and download; current evidence confirms
-   login and directory listing only.
-4. Consider additional inter-department ACLs and restrict management access.
-5. Confirm same-VLAN ping destinations match the other clients' current
-   addresses, then recapture any inconclusive tests.
-6. Validate NAT and routing to a simulated host beyond R1-WAN.
-7. Consider redundant links, switch hardening, and a consistent configuration
-   backup process as future improvements.
