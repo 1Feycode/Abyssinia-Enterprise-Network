@@ -27,6 +27,7 @@ limitations.
 | [18-web-server-incorrect-subnet-mask.png](18-web-server-incorrect-subnet-mask.png) | Before-fix WEB-SERVER configuration showing incorrect `/24` mask `255.255.255.0` |
 | [19-dns-www-abyssinia-com-record.png](19-dns-www-abyssinia-com-record.png) | DNS Service is On and the A record maps `www.abyssinia.com` to `192.168.10.69` |
 | [20-web-server-http-service.png](20-web-server-http-service.png) | WEB-SERVER HTTP service is On; HTTPS is also On |
+| [21-dns-failure-hostname-unresolved.png](21-dns-failure-hostname-unresolved.png) | FIN-PC1 browser shows “Host Name Unresolved” for `www.abyssinia.com` |
 
 Do not add fabricated or sample screenshots. Capture any remaining tests from
 the actual simulation, save them with descriptive filenames, and update the

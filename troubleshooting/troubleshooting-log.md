@@ -71,3 +71,29 @@ verify restored connectivity.
 
 **Status:** Incorrect mask identified and corrected; connectivity verification
 pending.
+
+## Incident 005: Web hostname could not be resolved
+
+**Client:** FIN-PC1
+
+**Requested URL:** `http://www.abyssinia.com`
+
+**Symptom:** The Packet Tracer browser displayed **Host Name Unresolved**
+when the client tried to browse to the company web hostname.
+
+**Root cause:** DNS Service on DNS-SERVER (`192.168.10.67`) was Off, so clients
+could not resolve the configured hostname to the web server address.
+
+**Resolution:** Turned DNS Service On and confirmed the DNS A record
+`www.abyssinia.com` points to WEB-SERVER at `192.168.10.69`.
+
+**Evidence:** The [client failure screenshot](../evidence/21-dns-failure-hostname-unresolved.png)
+shows the unresolved hostname. The DNS-Off state was observed during
+troubleshooting; the supplied [DNS service and record screenshot](../evidence/19-dns-www-abyssinia-com-record.png)
+captures the subsequent DNS Service On state and the A record pointing to `.69`.
+
+**Verification:** The service state and record are now configured, but a
+successful client lookup and browser load after enabling DNS have not yet been
+captured.
+
+**Status:** DNS service enabled and record confirmed; client-side retest pending.
