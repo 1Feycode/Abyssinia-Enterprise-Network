@@ -11,11 +11,11 @@
 
 | ID | Test | Expected | Observed result | Status | Evidence |
 |---|---|---|---|---|---|
-| T01 | IT-PC1 to IT-PC2 (same VLAN) | Reachable | No result recorded | Not tested | — |
-| T02 | ADMIN-PC1 to ADMIN-PC2 (same VLAN) | Reachable | No result recorded | Not tested | — |
-| T03 | HR-PC1 to HR-PC2 (same VLAN) | Reachable | No result recorded | Not tested | — |
-| T04 | FIN-PC1 to FIN-PC2 (same VLAN) | Reachable | No result recorded | Not tested | — |
-| T05 | IT-PC1 to HR-PC1 (`192.168.10.104`, inter-VLAN) | Reachable; no ACL blocks this path | Three replies out of four; first request timed out | Partial; repeat after ARP learning | [Ping output](../evidence/07-inter-vlan-connectivity.png) |
+| T01 | IT-PC1 / IT-PC2 client-to-client (same VLAN) | Reachable | IT-PC1 pinged `.72` and IT-PC2 pinged `.71`; each received 4/4 replies | Verified | [IT-PC1](../evidence/26-it-pc1-ping-192-168-10-72.png) / [IT-PC2](../evidence/25-it-pc2-ping-192-168-10-71.png) |
+| T02 | ADMIN-PC1 / ADMIN-PC2 client-to-client (same VLAN) | Reachable | ADMIN-PC1 pinged `.8` and ADMIN-PC2 pinged `.7`; each received 4/4 replies | Verified | [ADMIN-PC1](../evidence/30-admin-pc1-ping-192-168-10-8.png) / [ADMIN-PC2](../evidence/29-admin-pc2-ping-192-168-10-7.png) |
+| T03 | HR clients client-to-client (same VLAN) | Reachable | HR-PC1 pinged `.103` and HR-PC2 pinged `.105`; each received 4/4 replies | Verified | [HR-PC1](../evidence/24-hr-pc1-ping-192-168-10-103.png) / [HR-PC2](../evidence/23-hr-pc2-ping-192-168-10-105.png) |
+| T04 | FIN-PC1 / FIN-PC2 client-to-client (same VLAN) | Reachable | FIN-PC1 pinged `.137` and FIN-PC2 pinged `.135`; each received 4/4 replies | Verified | [FIN-PC1](../evidence/28-fin-pc1-ping-192-168-10-137.png) / [FIN-PC2](../evidence/27-fin-pc2-ping-192-168-10-135.png) |
+| T05 | IT-PC1 to HR-PC1 (`192.168.10.104`, inter-VLAN) | Reachable; no ACL blocks this path | Three replies out of four; first request timed out | Partial; a repeat to `.104` is not yet evidenced | [Initial ping](../evidence/07-inter-vlan-connectivity.png) |
 | T06 | IT-PC1 to DSW-CORE transit interface (`176.16.0.1`) | Reachable | Four replies, zero loss | Verified | [Ping output](../evidence/08-core-router-link-connectivity.png) |
 | T07 | IT-PC1 to R1-WAN transit interface (`176.16.0.2`) | Reachable | Four replies, zero loss | Verified | [Ping output](../evidence/09-router-lan-connectivity.png) |
 | T08 | IT-PC1 to R1-WAN simulated upstream interface (`200.64.100.2`) | Reachable in simulation | Four replies, zero loss | Verified to router interface only | [Ping output](../evidence/10-simulated-wan-connectivity.png) |
@@ -24,17 +24,24 @@
 | T11 | Authorized IT client logs into IT-Server FTP (`192.168.10.68`) and lists files | Login and listing succeed | Connected, authenticated as `ftp_lab`, and listed the FTP directory | Verified | [FTP login and listing](../evidence/15-ftp-server-login-directory-listing.png) |
 | T12 | Authorized IT client uploads and downloads a test file through FTP | Both transfers succeed | No transfer result shown | Not tested | — |
 | T13 | WEB-SERVER with corrected `/27` mask reaches its gateway and an IT peer | Both destinations reply | Before-fix `/24` and corrected `/27` configurations are captured; no post-fix ping result | Pending | [Before](../evidence/18-web-server-incorrect-subnet-mask.png) / [after](../evidence/17-web-server-ip-configuration.png) configuration |
+| T14 | IT-PC1 to HR client (`192.168.10.103`, inter-VLAN) | Reachable | First request timed out; next three replied (3/4, 25% loss) | Partial; repeat needed | [Ping output](../evidence/31-it-pc1-ping-192-168-10-103.png) |
+| T15 | IT-PC1 to FIN-PC1 (`192.168.10.137`, inter-VLAN) | Reachable | First request timed out; next three replied (3/4, 25% loss) | Partial; repeat needed | [Ping output](../evidence/32-it-pc1-ping-192-168-10-137.png) |
+| T16 | IT-PC1 to ADMIN client (`192.168.10.6`, inter-VLAN) | Reachable | First request timed out; next three replied (3/4, 25% loss) | Partial; repeat needed | [Ping output](../evidence/33-it-pc1-ping-192-168-10-6.png) |
 
-T05's first timeout may occur while ARP resolves the destination. Repeat the
-ping and record the full result before treating cross-VLAN connectivity as
-stable. T08 confirms reachability to the router's own simulated WAN interface;
-it does not prove upstream or Internet access. T09's direct-IP test from IT-PC1
-is still pending. T10 is verified: FIN-PC1 initially reported an unresolved
-hostname while DNS was disabled, then successfully loaded the page by hostname
-after DNS was enabled. This is a lab-local DNS mapping, not public DNS for the
-`.com` domain. The older browser screenshot at `.67` predates the separation.
-T11 confirms FTP login and directory listing on `192.168.10.68`; T12 still
-needs upload and download evidence.
+The same-VLAN client pings in T01-T04 each show four replies and no packet
+loss. T05 still needs a repeat to the exact HR-PC1 address `.104`; the newly
+captured inter-VLAN pings in T14-T16 each show one timed-out request followed
+by three replies, so repeat those tests as well before treating cross-VLAN
+connectivity as stable. Do not infer the cause of the first-request timeouts
+without confirming it in the simulation. T08 confirms reachability to the
+router's own simulated WAN interface; it does not prove upstream or Internet
+access. T09's direct-IP test from IT-PC1 is still pending. T10 is verified:
+FIN-PC1 initially reported an unresolved hostname while DNS was disabled, then
+successfully loaded the page by hostname after DNS was enabled. This is a
+lab-local DNS mapping, not public DNS for the `.com` domain. The older browser
+screenshot at `.67` predates the separation. T11 confirms FTP login and
+directory listing on `192.168.10.68`; T12 still needs upload and download
+evidence.
 
 ## Addressing and switching evidence
 

@@ -29,6 +29,17 @@ limitations.
 | [20-web-server-http-service.png](20-web-server-http-service.png) | WEB-SERVER HTTP service is On; HTTPS is also On |
 | [21-dns-failure-hostname-unresolved.png](21-dns-failure-hostname-unresolved.png) | FIN-PC1 browser shows “Host Name Unresolved” for `www.abyssinia.com` |
 | [22-dns-browser-success.png](22-dns-browser-success.png) | FIN-PC1 successfully loads the page at `http://www.abyssinia.com` after DNS was enabled |
+| [23-hr-pc2-ping-192-168-10-105.png](23-hr-pc2-ping-192-168-10-105.png) | HR-PC2 ping to `192.168.10.105`; four replies, no packet loss |
+| [24-hr-pc1-ping-192-168-10-103.png](24-hr-pc1-ping-192-168-10-103.png) | HR-PC1 ping to `192.168.10.103`; four replies, no packet loss |
+| [25-it-pc2-ping-192-168-10-71.png](25-it-pc2-ping-192-168-10-71.png) | IT-PC2 ping to `192.168.10.71`; four replies, no packet loss |
+| [26-it-pc1-ping-192-168-10-72.png](26-it-pc1-ping-192-168-10-72.png) | IT-PC1 ping to `192.168.10.72`; four replies, no packet loss |
+| [27-fin-pc2-ping-192-168-10-135.png](27-fin-pc2-ping-192-168-10-135.png) | FIN-PC2 ping to `192.168.10.135`; four replies, no packet loss |
+| [28-fin-pc1-ping-192-168-10-137.png](28-fin-pc1-ping-192-168-10-137.png) | FIN-PC1 ping to `192.168.10.137`; four replies, no packet loss |
+| [29-admin-pc2-ping-192-168-10-7.png](29-admin-pc2-ping-192-168-10-7.png) | ADMIN-PC2 ping to `192.168.10.7`; four replies, no packet loss |
+| [30-admin-pc1-ping-192-168-10-8.png](30-admin-pc1-ping-192-168-10-8.png) | ADMIN-PC1 ping to `192.168.10.8`; four replies, no packet loss |
+| [31-it-pc1-ping-192-168-10-103.png](31-it-pc1-ping-192-168-10-103.png) | IT-PC1 inter-VLAN ping to HR address `.103`; first request timed out, next three replied |
+| [32-it-pc1-ping-192-168-10-137.png](32-it-pc1-ping-192-168-10-137.png) | IT-PC1 inter-VLAN ping to FIN-PC1 `.137`; first request timed out, next three replied |
+| [33-it-pc1-ping-192-168-10-6.png](33-it-pc1-ping-192-168-10-6.png) | IT-PC1 inter-VLAN ping to Administration address `.6`; first request timed out, next three replied |
 
 Do not add fabricated or sample screenshots. Capture any remaining tests from
 the actual simulation, save them with descriptive filenames, and update the
