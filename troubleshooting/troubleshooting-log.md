@@ -48,10 +48,11 @@ gateway and DHCP assignments in the revised simulation.
 **Symptom:** After assigning a static IP address, the web server could not
 reach its default gateway or other PCs.
 
-**Root cause:** The subnet mask was left at an incorrect/default value instead
-of being set to the IT VLAN's `/27` mask. The initial mask value was not
-recorded. The correct mask is `255.255.255.224` (`/27`), not
-`255.255.255.254`.
+**Root cause:** The mask was left at `255.255.255.0` (`/24`) instead of the
+IT VLAN's `/27` mask, `255.255.255.224`. The `/24` mask made the server treat
+addresses outside its actual subnet as local, preventing correct communication
+through its configured gateway. `255.255.255.254` is not the correct mask for
+this subnet either.
 
 **Resolution:** Set the web server's static network configuration to:
 
@@ -60,9 +61,13 @@ recorded. The correct mask is `255.255.255.224` (`/27`), not
 - Default gateway: `192.168.10.94`
 - DNS server: `192.168.10.67`
 
-**Verification:** The current web-server IP-configuration screenshot shows the
-correct address, mask, gateway, and DNS server. Capture successful pings to
-`192.168.10.94` and a peer PC, then test HTTP access to complete verification.
+**Evidence:** The [before-fix screenshot](../evidence/18-web-server-incorrect-subnet-mask.png)
+shows the `/24` mask. The [corrected configuration screenshot](../evidence/17-web-server-ip-configuration.png)
+shows the `/27` mask, gateway, and DNS server.
 
-**Status:** Mask corrected in the current configuration; post-fix connectivity
-verification pending.
+**Verification:** Mask correction is evidenced. Successful post-fix pings to
+`192.168.10.94` and a peer PC, followed by HTTP testing, are still needed to
+verify restored connectivity.
+
+**Status:** Incorrect mask identified and corrected; connectivity verification
+pending.

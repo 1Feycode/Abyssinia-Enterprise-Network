@@ -23,6 +23,7 @@
 | T10 | Resolve the web server hostname from a client | Name resolves to `192.168.10.69` | No lookup result recorded | Not tested | — |
 | T11 | Authorized IT client logs into IT-Server FTP (`192.168.10.68`) and lists files | Login and listing succeed | Connected, authenticated as `ftp_lab`, and listed the FTP directory | Verified | [FTP login and listing](../evidence/15-ftp-server-login-directory-listing.png) |
 | T12 | Authorized IT client uploads and downloads a test file through FTP | Both transfers succeed | No transfer result shown | Not tested | — |
+| T13 | WEB-SERVER with corrected `/27` mask reaches its gateway and an IT peer | Both destinations reply | Before-fix `/24` and corrected `/27` configurations are captured; no post-fix ping result | Pending | [Before](../evidence/18-web-server-incorrect-subnet-mask.png) / [after](../evidence/17-web-server-ip-configuration.png) configuration |
 
 T05's first timeout may occur while ARP resolves the destination. Repeat the
 ping and record the full result before treating cross-VLAN connectivity as

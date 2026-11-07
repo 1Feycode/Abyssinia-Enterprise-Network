@@ -24,6 +24,7 @@ limitations.
 | [15-ftp-server-login-directory-listing.png](15-ftp-server-login-directory-listing.png) | IT-PC1 logs into IT-Server at `192.168.10.68` and lists files; no transfer is shown |
 | [16-ftp-server-ip-configuration.png](16-ftp-server-ip-configuration.png) | IT-Server static IPv4 address, subnet mask, gateway, and DNS settings |
 | [17-web-server-ip-configuration.png](17-web-server-ip-configuration.png) | Web server static IPv4 address `192.168.10.69`, mask, gateway, and DNS |
+| [18-web-server-incorrect-subnet-mask.png](18-web-server-incorrect-subnet-mask.png) | Before-fix WEB-SERVER configuration showing incorrect `/24` mask `255.255.255.0` |
 
 Do not add fabricated or sample screenshots. Capture any remaining tests from
 the actual simulation, save them with descriptive filenames, and update the
